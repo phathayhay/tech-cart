@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "_id": "6a23d5c19980d969e7bfbd32",
+      "name": "Luong Phat",
+      "email": "luongphat100@gmail.com",
+      "date_of_birth": "2005-10-03T00:00:00.000Z",
+      "password": "a2a2288dc960317e5acb20f988fadd9d5ef637344d09881595cb608b0252139a",
+      "created_at": "2026-06-06T08:09:37.630Z",
+      "updated_at": "2026-06-06T08:10:52.461Z",
+      "email_verify_token": "",
+      "forgot_password_token": "",
+      "verify": 1,
+      "bio": "",
+      "location": "",
+      "website": "",
+      "username": "user6a23d5c19980d969e7bfbd32",
+      "avatar": "http://localhost:3000/static/image/j4p55ohkz41ec1zm46nopbdz1.jpg",
+      "cover_photo": "http://localhost:3000/static/image/vpfpxbb5s20npgp4sb5369yu8.jpg",
+      "role": 2
+    }
+  ],
+  "refreshTokens": [
+    {
+      "_id": "6a23d5c19980d969e7bfbd33",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmEyM2Q1YzE5OTgwZDk2OWU3YmZiZDMyIiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzgwNzMzMzc3LCJleHAiOjE3ODkzNzMzNzd9.2lOoQyZLbsbWYFIdv6DKHzqntEZWj9ZJC-r3WrdpHBk",
+      "created_at": "2026-06-06T08:09:37.633Z",
+      "user_id": "6a23d5c19980d969e7bfbd32"
+    },
+    {
+      "_id": "6a23d7039980d969e7bfbd35",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmEyM2Q1YzE5OTgwZDk2OWU3YmZiZDMyIiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzgwNzMzNjk5LCJleHAiOjE3ODkzNzM2OTl9.AiJIWE0_W8ieE2Cbf8szvJFpioc63cBnu1bpfO6_4Nw",
+      "created_at": "2026-06-06T08:14:59.711Z",
+      "user_id": "6a23d5c19980d969e7bfbd32"
+    }
+  ]
+}

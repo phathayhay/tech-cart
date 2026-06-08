@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechCart - Modern User Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Floating animated background blobs -->
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmation-dialog" class="confirmation-dialog hidden">
+      <div class="confirmation-content">
+        <h3 id="confirmation-title">Confirm Action</h3>
+        <p id="confirmation-message">Are you sure?</p>
+        <div class="confirmation-actions">
+          <button id="confirmation-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button id="confirmation-confirm-btn" class="btn btn-danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Global Header / Navbar -->
+    <header id="main-header" class="main-header hidden">
+      <div class="header-container">
+        <a href="#/" class="logo">
+          <i data-lucide="shopping-bag" class="logo-icon"></i>
+          <span>Tech<span>Cart</span></span>
+        </a>
+        <div class="user-menu">
+          <button id="cart-toggle-btn" class="btn btn-secondary btn-icon-only cart-btn" title="Open Cart">
+            <i data-lucide="shopping-cart"></i>
+            <span id="cart-badge" class="cart-badge hidden">0</span>
+          </button>
+          <div id="header-logged-in" class="header-logged-in hidden">
+            <button id="header-dashboard-btn" type="button" class="header-user-info header-dashboard-btn" title="Go to Dashboard">
+              <img
+                id="header-avatar"
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
+                alt="Avatar"
+                class="header-avatar"
+              />
+              <span id="header-username" class="header-username">Loading...</span>
+              <i data-lucide="layout-dashboard" class="header-dashboard-icon"></i>
+            </button>
+            <button id="logout-btn" class="btn btn-secondary btn-icon-only" title="Logout">
+              <i data-lucide="log-out"></i>
+            </button>
+          </div>
+          <div id="header-guest" class="header-guest hidden">
+            <a href="#/login" class="btn btn-secondary btn-sm">Login</a>
+            <a href="#/register" class="btn btn-primary btn-sm">Register</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cart Drawer Overlay -->
+    <div id="cart-overlay" class="cart-overlay hidden"></div>
+    <aside id="cart-drawer" class="cart-drawer">
+      <div class="cart-drawer-header">
+        <h2><i data-lucide="shopping-cart"></i> Your Cart</h2>
+        <button id="cart-close-btn" class="btn btn-secondary btn-icon-only" title="Close Cart">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div id="cart-items-container" class="cart-items-container">
+        <div id="cart-empty-state" class="cart-empty-state">
+          <i data-lucide="shopping-bag"></i>
+          <p>Your cart is empty</p>
+          <a href="#/" class="btn btn-primary btn-sm" id="cart-shop-link">Browse Products</a>
+        </div>
+      </div>
+      <div class="cart-drawer-footer">
+        <div class="checkout-fields">
+          <label for="checkout-payment-method">Payment Method</label>
+          <select id="checkout-payment-method">
+            <option value="cod">Cash on Delivery</option>
+            <option value="card">Mock Card Payment</option>
+            <option value="bank_transfer">Bank Transfer</option>
+          </select>
+          <label for="checkout-shipping-address">Shipping Address</label>
+          <textarea id="checkout-shipping-address" rows="2" placeholder="Enter your delivery address"></textarea>
+          <label for="checkout-note">Order Note</label>
+          <textarea id="checkout-note" rows="2" placeholder="Optional delivery note"></textarea>
+        </div>
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span id="cart-total-amount" class="cart-total-amount">0 ₫</span>
+        </div>
+        <button id="checkout-btn" class="btn btn-primary btn-block" disabled>
+          <i data-lucide="credit-card"></i> Checkout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Go to Top Button -->
+    <button id="go-to-top-btn" class="go-to-top-btn hidden" title="Back to top">
+      <i data-lucide="arrow-up"></i>
+    </button>
+
+    <!-- Main Container -->
+    <main class="app-container">
+      <!-- LOGIN SCREEN -->
+      <section id="login-screen" class="screen hidden">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-logo">
+              <i data-lucide="shopping-bag"></i>
+            </div>
+            <h1>Welcome Back</h1>
+            <p>Login to manage your shopping dashboard</p>
+          </div>
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="login-email" placeholder="name@example.com" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="label-row">
+                <label for="login-password">Password</label>
+                <a href="#/forgot-password" class="text-link">Forgot password?</a>
+              </div>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="login-password"
+                  placeholder="••••••••"
+                  required
+                  autocomplete="current-password"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>Login</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>Don't have an account? <a href="#/register" class="text-link">Register now</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- REGISTER SCREEN -->
+      <section id="register-screen" class="screen hidden">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-logo">
+              <i data-lucide="user-plus"></i>
+            </div>
+            <h1>Create Account</h1>
+            <p>Join TechCart today and start shopping</p>
+          </div>
+          <form id="register-form" class="auth-form">
+            <div class="form-group">
+              <label for="register-name">Full Name</label>
+              <div class="input-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <input type="text" id="register-name" placeholder="John Doe" required autocomplete="name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="register-email" placeholder="name@example.com" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="register-dob">Date of Birth</label>
+                <div class="input-wrapper">
+                  <i data-lucide="calendar" class="input-icon"></i>
+                  <input type="date" id="register-dob" required />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="register-password"
+                  placeholder="Min 6 characters"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-confirm-password">Confirm Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="register-confirm-password"
+                  placeholder="Confirm your password"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>Register</span>
+              <i data-lucide="user-check"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>Already have an account? <a href="#/login" class="text-link">Login instead</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORGOT PASSWORD SCREEN -->
+      <section id="forgot-password-screen" class="screen hidden">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-logo">
+              <i data-lucide="key-round"></i>
+            </div>
+            <h1>Reset Password</h1>
+            <p>Enter your email and we'll generate a password recovery token</p>
+          </div>
+          <form id="forgot-password-form" class="auth-form">
+            <div class="form-group">
+              <label for="forgot-email">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="forgot-email" placeholder="name@example.com" required />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>Send Reset Token</span>
+              <i data-lucide="send"></i>
+            </button>
+          </form>
+          <!-- Simulation Console for Testing Link in sandboxed environment -->
+          <div id="reset-token-box" class="simulation-box hidden">
+            <div class="simulation-title">
+              <i data-lucide="terminal"></i>
+              <span>Local System Intercepted Link</span>
+            </div>
+            <p>Since the email service is local/simulated, we intercepted the link here:</p>
+            <a id="intercepted-reset-link" href="#" class="interception-link">Click here to Reset Password</a>
+          </div>
+          <div class="auth-footer">
+            <p>Remembered password? <a href="#/login" class="text-link">Back to login</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESET PASSWORD SCREEN -->
+      <section id="reset-password-screen" class="screen hidden">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-logo">
+              <i data-lucide="shield-alert"></i>
+            </div>
+            <h1>Create New Password</h1>
+            <p>Please enter your new secure password below</p>
+          </div>
+          <form id="reset-password-form" class="auth-form">
+            <input type="hidden" id="reset-token-input" />
+            <div class="form-group">
+              <label for="reset-password">New Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="reset-password"
+                  placeholder="Min 6 characters"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reset-confirm-password">Confirm New Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="reset-confirm-password"
+                  placeholder="Confirm your new password"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>Update Password</span>
+              <i data-lucide="save"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <a href="#/login" class="text-link">Back to login</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- STORE SCREEN -->
+      <section id="store-screen" class="screen hidden">
+        <div class="store-container">
+          <div class="store-hero">
+            <h1>Tech Store</h1>
+            <p>Discover the latest laptops, phones, and accessories</p>
+          </div>
+          <div id="products-grid" class="products-grid">
+            <!-- Products rendered by JS -->
+          </div>
+          <div id="products-loading" class="products-loading">
+            <i data-lucide="loader-2" class="spin-icon"></i>
+            <span>Loading products...</span>
+          </div>
+          <div id="products-empty" class="products-empty hidden">
+            <i data-lucide="package-x"></i>
+            <p>No products available</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DASHBOARD SCREEN -->
+      <section id="dashboard-screen" class="screen hidden">
+        <!-- Dashboard User Info (Top Right) - Clickable Button -->
+        <button id="dashboard-user-info" class="dashboard-user-info-btn" title="Go to Dashboard">
+          <span id="dashboard-user-name" class="dashboard-user-name">Welcome, User</span>
+          <img
+            id="dashboard-user-avatar"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50&h=50&fit=crop"
+            alt="User Avatar"
+            class="dashboard-user-avatar"
+          />
+        </button>
+
+        <div class="dashboard-grid">
+          <!-- Profile Banner Card (Top) -->
+          <div class="dashboard-banner-card">
+            <div class="cover-photo-wrapper">
+              <img
+                id="profile-cover"
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=300&fit=crop"
+                alt="Cover Photo"
+                class="cover-photo"
+              />
+              <div class="cover-upload-btn-wrapper">
+                <label for="cover-upload" class="cover-upload-btn"> <i data-lucide="camera"></i> Change Cover </label>
+                <input type="file" id="cover-upload" accept="image/*" class="file-input-hidden" />
+              </div>
+            </div>
+            <div class="profile-header-details">
+              <div class="avatar-wrapper">
+                <img
+                  id="profile-avatar"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop"
+                  alt="Avatar"
+                  class="profile-avatar"
+                />
+                <label for="avatar-upload" class="avatar-upload-btn" title="Change Avatar">
+                  <i data-lucide="edit-3"></i>
+                </label>
+                <input type="file" id="avatar-upload" accept="image/*" class="file-input-hidden" />
+              </div>
+              <div class="profile-title-text">
+                <h2 id="profile-display-name">Loading Profile...</h2>
+                <p>@<span id="profile-display-username">username</span></p>
+                <div class="verification-badge-row">
+                  <span id="verification-status-badge" class="badge badge-unverified">Unverified</span>
+                  <button id="resend-verify-email-btn" class="btn btn-tiny btn-accent hidden">
+                    <i data-lucide="mail-warning"></i> Resend Code
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- System Logs Box for intercepted verification link -->
+          <div id="email-verification-interception-box" class="simulation-box hidden">
+            <div class="simulation-title">
+              <i data-lucide="terminal"></i>
+              <span>Local System Intercepted Email verification</span>
+            </div>
+            <p>We intercepted the email verification link from the console:</p>
+            <a id="intercepted-verify-link" href="#" class="interception-link">Click here to Verify Email Address</a>
+          </div>
+
+          <!-- Sidebar Navigation -->
+          <aside class="dashboard-sidebar">
+            <div class="sidebar-card">
+              <nav class="sidebar-nav">
+                <button class="nav-tab active" data-tab="tab-overview"><i data-lucide="user"></i> Overview</button>
+                <button class="nav-tab" data-tab="tab-orders"><i data-lucide="package"></i> Orders</button>
+                <button class="nav-tab" data-tab="tab-edit-profile"><i data-lucide="edit"></i> Edit Profile</button>
+                <button class="nav-tab" data-tab="tab-security"><i data-lucide="lock"></i> Password & Security</button>
+              </nav>
+            </div>
+          </aside>
+
+          <!-- Main Content Area -->
+          <div class="dashboard-content">
+            <!-- TAB 1: OVERVIEW -->
+            <div id="tab-overview" class="tab-content active">
+              <div class="content-card">
+                <h3>Personal Information</h3>
+                <div class="info-grid">
+                  <div class="info-item">
+                    <span class="info-label">Full Name</span>
+                    <span id="info-name" class="info-value">-</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Email Address</span>
+                    <span id="info-email" class="info-value">-</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Username</span>
+                    <span id="info-username" class="info-value">-</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Date of Birth</span>
+                    <span id="info-dob" class="info-value">-</span>
+                  </div>
+                  <div class="info-item full-width">
+                    <span class="info-label">Bio</span>
+                    <span id="info-bio" class="info-value">-</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Location</span>
+                    <span id="info-location" class="info-value">-</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Website</span>
+                    <span id="info-website" class="info-value">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB: ORDERS -->
+            <div id="tab-orders" class="tab-content">
+              <div class="content-card">
+                <h3>Order History</h3>
+                <div id="orders-loading" class="orders-loading">
+                  <i data-lucide="loader-2" class="spin-icon"></i>
+                  <span>Loading orders...</span>
+                </div>
+                <div id="orders-empty" class="orders-empty hidden">
+                  <i data-lucide="package-open"></i>
+                  <p>No orders yet. Start shopping!</p>
+                  <a href="#/" class="btn btn-primary btn-sm">Go to Store</a>
+                </div>
+                <div id="orders-table-wrapper" class="orders-table-wrapper hidden">
+                  <table class="orders-table">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="orders-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: EDIT PROFILE -->
+            <div id="tab-edit-profile" class="tab-content">
+              <div class="content-card">
+                <h3>Edit Profile</h3>
+                <form id="edit-profile-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="edit-name">Full Name</label>
+                      <input type="text" id="edit-name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="edit-username">Username</label>
+                      <input type="text" id="edit-username" />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="edit-dob">Date of Birth</label>
+                      <input type="date" id="edit-dob" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="edit-location">Location</label>
+                      <input type="text" id="edit-location" placeholder="e.g. Ho Chi Minh, Vietnam" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-website">Website URL</label>
+                    <input type="url" id="edit-website" placeholder="https://example.com" />
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-bio">Biography</label>
+                    <textarea id="edit-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary"><i data-lucide="check"></i> Save Changes</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- TAB 3: SECURITY -->
+            <div id="tab-security" class="tab-content">
+              <div class="content-card">
+                <h3>Change Password</h3>
+                <form id="change-password-form">
+                  <div class="form-group">
+                    <label for="change-old-password">Current Password</label>
+                    <div class="input-wrapper">
+                      <i data-lucide="lock" class="input-icon"></i>
+                      <input type="password" id="change-old-password" required autocomplete="current-password" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="change-new-password">New Password</label>
+                    <div class="input-wrapper">
+                      <i data-lucide="lock" class="input-icon"></i>
+                      <input
+                        type="password"
+                        id="change-new-password"
+                        placeholder="Min 6 characters"
+                        required
+                        autocomplete="new-password"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="change-confirm-password">Confirm New Password</label>
+                    <div class="input-wrapper">
+                      <i data-lucide="shield-check" class="input-icon"></i>
+                      <input
+                        type="password"
+                        id="change-confirm-password"
+                        placeholder="Confirm new password"
+                        required
+                        autocomplete="new-password"
+                      />
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary"><i data-lucide="save"></i> Update Password</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
