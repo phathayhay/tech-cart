@@ -7,6 +7,36 @@ import { logout } from './auth.js'
 
 export async function loadHeaderUser() {
   if (!isLoggedIn()) return
+
+  // 1. First attempt to load profile from canonical NestJS API (/api/v1/users/me)
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/users/me`, {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`
+      }
+    })
+    if (res.ok) {
+      const json = await res.json()
+      if (json.data) {
+        const u = json.data
+        appState.user = {
+          id: u.id,
+          name: u.full_name || u.fullName || u.email,
+          email: u.email,
+          avatar: u.avatar_url || u.avatarUrl
+        }
+        const usernameEl = document.getElementById('header-username')
+        if (usernameEl) usernameEl.textContent = appState.user.name || 'User'
+        const defaultAvatar =
+          'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop'
+        const avatarEl = document.getElementById('header-avatar')
+        if (avatarEl) avatarEl.src = appState.user.avatar || defaultAvatar
+        return
+      }
+    }
+  } catch (_e) {}
+
+  // 2. Fallback to legacy Express route
   const response = await apiCall('/users/me', { method: 'POST' })
   if (response.error) return
   const user = response.result

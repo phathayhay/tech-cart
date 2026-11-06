@@ -187,31 +187,48 @@ export function initAuthEvents() {
   const handleGoogleSignIn = async () => {
     try {
       showToast('Connecting to Google Sign-In...', 'info')
-      const urlRes = await fetch('/api/v1/auth/google/url')
+      const urlRes = await fetch(`${API_BASE}/api/v1/auth/google/url`)
       const urlJson = await urlRes.json()
+
+      // If real Google OAuth Client ID is configured in .env, redirect to Google consent screen
       if (urlJson?.data?.configured && urlJson?.data?.auth_url) {
         window.location.href = urlJson.data.auth_url
         return
       }
 
-      const emailInput = document.getElementById('login-email')?.value || 'customer@techcart.com'
-      const simRes = await fetch('/api/v1/auth/google/dev-simulate', {
+      // If in dev/local mode without GOOGLE_CLIENT_ID, perform instantaneous 1-click dev sign-in
+      const emailInput =
+        document.getElementById('login-email')?.value?.trim() ||
+        document.getElementById('register-email')?.value?.trim() ||
+        'customer@techcart.com'
+      const nameInput =
+        document.getElementById('register-name')?.value?.trim() || 'Google TechCart Customer'
+
+      const simRes = await fetch(`${API_BASE}/api/v1/auth/google/dev-simulate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: emailInput,
-          full_name: 'Google TechCart User'
+          full_name: nameInput
         })
       })
       const simJson = await simRes.json()
       if (!simRes.ok || !simJson?.success) {
-        showToast(simJson?.error?.message || 'Google Sign-In failed', 'error')
+        showToast(simJson?.error?.message || simJson?.message || 'Google Sign-In failed', 'error')
         return
       }
+
       setTokens(simJson.data.access_token, simJson.data.refresh_token)
+      appState.user = {
+        id: simJson.data.user.id,
+        email: simJson.data.user.email,
+        name: simJson.data.user.full_name,
+        avatar: simJson.data.user.avatar_url
+      }
       showToast(`Signed in with Google (${simJson.data.user.email})!`, 'success')
       await fetchCart()
       window.location.hash = '#/'
+      handleRoute()
     } catch (err) {
       showToast('Google Sign-In error: ' + (err.message || 'Unknown error'), 'error')
     }
