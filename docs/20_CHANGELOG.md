@@ -6,6 +6,21 @@
 
 ---
 
+## [1.2.0-phase2] — 2026-11-06 (Phase 2: Database Design & Prisma Setup)
+
+### Added
+- Created authoritative 38-table normalized PostgreSQL schema in [prisma/schema.prisma](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/prisma/schema.prisma) using `UUID` primary keys, `DECIMAL(15, 2)` monetary fields, and `VND` default currency (`TASK-010`).
+- Implemented global [PrismaService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/prisma/prisma.service.ts) and [PrismaModule](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/prisma/prisma.module.ts) wired into `AppModule`.
+- Generated SQL migration in [prisma/migrations/20261106_init_ecommerce_platform/migration.sql](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/prisma/migrations/20261106_init_ecommerce_platform/migration.sql) and custom PostgreSQL `CHECK` constraints + `GIN` Full-Text Search index in [database/constraints_and_fts.sql](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/database/constraints_and_fts.sql) (`TASK-011`).
+- Implemented idempotent database seed script in [prisma/seed.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/prisma/seed.ts) (`TASK-012`) seeding:
+  - 4 Roles (`CUSTOMER`, `SUPPORT_AGENT`, `INVENTORY_MANAGER`, `SUPER_ADMIN`) & 22 granular permissions.
+  - 4 Default verified accounts (`admin@techcart.com`, `inventory@techcart.com`, `support@techcart.com`, `customer@techcart.com` — password: `Password123!`).
+  - 6 Categories, 8 Flagship Products (6 featured on the 360° Rotating Wheel Showcase), 16 SKU Variants with attributes (`Màu sắc`, `Loại Switch`), and `inventory` + `inventory_transactions` ledger in VND (`₫`).
+  - 3 Active Vouchers (`WELCOME10`, `TECHSAVE500K`, `FREESHIP`) and 5 Official Store Policies (`store_policies`) in Vietnamese for the AI Shopping Assistant.
+- Added integration test [test/integration/prisma-schema.spec.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/test/integration/prisma-schema.spec.ts) verifying VND Decimal precision and DB-level `chk_inventory_non_negative` overselling protection.
+
+---
+
 ## [1.1.0-phase1] — 2026-11-06 (Phase 1: Foundation & Project Setup)
 
 ### Added

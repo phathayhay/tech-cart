@@ -42,9 +42,9 @@
 
 | Task ID | Module | Task Title & Technical Details | Priority | Dependencies | Expected Files | Testing / Verification | Status |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- | :---: |
-| `TASK-010` | Database | Create `prisma/schema.prisma` with all 38 normalized tables, enums, `Decimal(15,2)` columns, and indexes | `P0` | `TASK-006` | `prisma/schema.prisma`, `src/prisma/prisma.service.ts` | `npx prisma validate` passes | `NOT_STARTED` |
-| `TASK-011` | Database | Generate initial migration + custom SQL `CHECK` constraints (`quantity_on_hand >= quantity_reserved`) & `tsvector` GIN index | `P0` | `TASK-010` | `prisma/migrations/*` | `npx prisma migrate deploy` succeeds | `NOT_STARTED` |
-| `TASK-012` | Seed Data | Implement idempotent `prisma/seed.ts` (Roles, Permissions, Users, Categories, 12 Products + Variants + Inventory, Vouchers, Store Policies) | `P0` | `TASK-011` | `prisma/seed.ts` | `npx prisma db seed` runs twice idempotently | `NOT_STARTED` |
+| `TASK-010` | Database | Create `prisma/schema.prisma` with all 38 normalized tables, enums, `Decimal(15,2)` columns, and indexes | `P0` | `TASK-006` | `prisma/schema.prisma`, `src/prisma/prisma.service.ts` | `npx prisma validate` passes | `COMPLETED` |
+| `TASK-011` | Database | Generate initial migration + custom SQL `CHECK` constraints (`quantity_on_hand >= quantity_reserved`) & `tsvector` GIN index | `P0` | `TASK-010` | `prisma/migrations/*` | `npx prisma migrate deploy` succeeds | `COMPLETED` |
+| `TASK-012` | Seed Data | Implement idempotent `prisma/seed.ts` (Roles, Permissions, Users, Categories, 12 Products + Variants + Inventory, Vouchers, Store Policies) | `P0` | `TASK-011` | `prisma/seed.ts` | `npx prisma db seed` runs twice idempotently | `COMPLETED` |
 
 ---
 

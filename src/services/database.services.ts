@@ -38,7 +38,12 @@ function writeLocalDb(data: any) {
 }
 
 type LocalCollectionName = 'users' | 'refreshTokens' | 'products' | 'carts' | 'orders'
-type PostgresTableName = 'users' | 'refresh_tokens' | 'products' | 'carts' | 'orders'
+type PostgresTableName =
+  | 'legacy_users'
+  | 'legacy_refresh_tokens'
+  | 'legacy_products'
+  | 'legacy_carts'
+  | 'legacy_orders'
 
 const JSONB_COLUMNS = new Set(['images', 'items', 'status_history'])
 const VALID_IDENTIFIERS = /^[a-zA-Z_][a-zA-Z0-9_]*$/
@@ -520,7 +525,7 @@ class DatabaseServices {
 
   private async initPostgresTables() {
     await this.pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS legacy_users (
         _id VARCHAR(64) PRIMARY KEY,
         name VARCHAR(255) NOT NULL DEFAULT '',
         email VARCHAR(255) UNIQUE NOT NULL,
@@ -540,14 +545,14 @@ class DatabaseServices {
         role INTEGER NOT NULL DEFAULT 2
       );
 
-      CREATE TABLE IF NOT EXISTS refresh_tokens (
+      CREATE TABLE IF NOT EXISTS legacy_refresh_tokens (
         _id VARCHAR(64) PRIMARY KEY,
         token TEXT NOT NULL,
-        user_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+        user_id VARCHAR(64) NOT NULL REFERENCES legacy_users(_id) ON DELETE CASCADE,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
 
-      CREATE TABLE IF NOT EXISTS products (
+      CREATE TABLE IF NOT EXISTS legacy_products (
         _id VARCHAR(64) PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description TEXT NOT NULL DEFAULT '',
@@ -565,17 +570,17 @@ class DatabaseServices {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
 
-      CREATE TABLE IF NOT EXISTS carts (
+      CREATE TABLE IF NOT EXISTS legacy_carts (
         _id VARCHAR(64) PRIMARY KEY,
-        user_id VARCHAR(64) UNIQUE NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+        user_id VARCHAR(64) UNIQUE NOT NULL REFERENCES legacy_users(_id) ON DELETE CASCADE,
         items JSONB NOT NULL DEFAULT '[]'::jsonb,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
 
-      CREATE TABLE IF NOT EXISTS orders (
+      CREATE TABLE IF NOT EXISTS legacy_orders (
         _id VARCHAR(64) PRIMARY KEY,
-        user_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+        user_id VARCHAR(64) NOT NULL REFERENCES legacy_users(_id) ON DELETE CASCADE,
         items JSONB NOT NULL DEFAULT '[]'::jsonb,
         total_amount DOUBLE PRECISION NOT NULL,
         status VARCHAR(50) NOT NULL DEFAULT 'pending',
@@ -686,35 +691,35 @@ class DatabaseServices {
     if (this.isFallbackMode) {
       return new MockCollection<User>('users') as any
     }
-    return new PostgresTableAdapter<User>(this.pool, 'users') as any
+    return new PostgresTableAdapter<User>(this.pool, 'legacy_users') as any
   }
 
   get refreshTokens(): Collection<RefreshToken> {
     if (this.isFallbackMode) {
       return new MockCollection<RefreshToken>('refreshTokens') as any
     }
-    return new PostgresTableAdapter<RefreshToken>(this.pool, 'refresh_tokens') as any
+    return new PostgresTableAdapter<RefreshToken>(this.pool, 'legacy_refresh_tokens') as any
   }
 
   get products(): Collection<Product> {
     if (this.isFallbackMode) {
       return new MockCollection<Product>('products') as any
     }
-    return new PostgresTableAdapter<Product>(this.pool, 'products') as any
+    return new PostgresTableAdapter<Product>(this.pool, 'legacy_products') as any
   }
 
   get carts(): Collection<Cart> {
     if (this.isFallbackMode) {
       return new MockCollection<Cart>('carts') as any
     }
-    return new PostgresTableAdapter<Cart>(this.pool, 'carts') as any
+    return new PostgresTableAdapter<Cart>(this.pool, 'legacy_carts') as any
   }
 
   get orders(): Collection<Order> {
     if (this.isFallbackMode) {
       return new MockCollection<Order>('orders') as any
     }
-    return new PostgresTableAdapter<Order>(this.pool, 'orders') as any
+    return new PostgresTableAdapter<Order>(this.pool, 'legacy_orders') as any
   }
 }
 

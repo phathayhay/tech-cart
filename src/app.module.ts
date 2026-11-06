@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { validateEnv } from './config/env.validation'
 import { HealthModule } from './modules/health/health.module'
+import { PrismaModule } from './prisma/prisma.module'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { HealthModule } from './modules/health/health.module'
         limit: 120
       }
     ]),
+    PrismaModule,
     HealthModule
   ]
 })

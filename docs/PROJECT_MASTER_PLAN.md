@@ -67,7 +67,7 @@ All project specifications are organized in the `docs/` directory and must be ke
 | :--- | :--- | :--- | :--- | :--- |
 | **Phase 0** | Discovery, Analysis & Documentation | Complete `docs/` suite (`00`–`20` + `PROJECT_MASTER_PLAN.md`) | `COMPLETED` | User reviews and approves Phase 0 |
 | **Phase 1** | Foundation & Project Setup | Monorepo/Workspace structure (`src/main.ts` NestJS + `frontend/` React/Vite), ESLint/Prettier, Docker Compose, Env validation | `COMPLETED` | Phase 0 Approved |
-| **Phase 2** | Database Design & Prisma Setup | `prisma/schema.prisma` (34 tables), initial migration, seed script (roles, categories, variants, policies) | `NOT_STARTED` | Phase 1 Complete |
+| **Phase 2** | Database Design & Prisma Setup | `prisma/schema.prisma` (38 tables), initial migration, seed script (roles, categories, variants, policies in VND) | `COMPLETED` | Phase 1 Complete |
 | **Phase 3** | Auth, Users & RBAC | Argon2id/Bcrypt hashing, JWT Access/Refresh rotation, RBAC Guards, Addresses, Profile & Cloudinary Avatar | `NOT_STARTED` | Phase 2 Complete |
 | **Phase 4** | Product Catalog, Categories & Variants | Category tree, Products, Variants/SKUs, Attributes, Cloudinary Gallery, Postgres FTS search & filtering | `NOT_STARTED` | Phase 3 Complete |
 | **Phase 5** | Cart & Wishlist | Guest + Auth Cart merge, real-time stock/price validation, Wishlist CRUD & move-to-cart | `NOT_STARTED` | Phase 4 Complete |
