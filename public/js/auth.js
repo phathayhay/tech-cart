@@ -183,5 +183,41 @@ export function initAuthEvents() {
     e.preventDefault()
     showConfirmationDialog('Logout Confirmation', 'Are you sure you want to logout?', logout)
   })
+
+  const handleGoogleSignIn = async () => {
+    try {
+      showToast('Connecting to Google Sign-In...', 'info')
+      const urlRes = await fetch('/api/v1/auth/google/url')
+      const urlJson = await urlRes.json()
+      if (urlJson?.data?.configured && urlJson?.data?.auth_url) {
+        window.location.href = urlJson.data.auth_url
+        return
+      }
+
+      const emailInput = document.getElementById('login-email')?.value || 'customer@techcart.com'
+      const simRes = await fetch('/api/v1/auth/google/dev-simulate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput,
+          full_name: 'Google TechCart User'
+        })
+      })
+      const simJson = await simRes.json()
+      if (!simRes.ok || !simJson?.success) {
+        showToast(simJson?.error?.message || 'Google Sign-In failed', 'error')
+        return
+      }
+      setTokens(simJson.data.access_token, simJson.data.refresh_token)
+      showToast(`Signed in with Google (${simJson.data.user.email})!`, 'success')
+      await fetchCart()
+      window.location.hash = '#/'
+    } catch (err) {
+      showToast('Google Sign-In error: ' + (err.message || 'Unknown error'), 'error')
+    }
+  }
+
+  document.getElementById('google-login-btn')?.addEventListener('click', handleGoogleSignIn)
+  document.getElementById('google-register-btn')?.addEventListener('click', handleGoogleSignIn)
 }
 

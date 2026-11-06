@@ -95,3 +95,27 @@ export class ResetPasswordDto {
   })
   new_password: string
 }
+
+export class GoogleAuthDto {
+  @ApiPropertyOptional({
+    description: 'Google Identity Services ID Token (JWT) or dev mock token'
+  })
+  @IsOptional()
+  @IsString()
+  id_token?: string
+
+  @ApiPropertyOptional({
+    description: 'Google OAuth 2.0 authorization code returned from Google consent screen'
+  })
+  @IsOptional()
+  @IsString()
+  code?: string
+
+  @ApiPropertyOptional({
+    description: 'Optional redirect URI used when requesting the authorization code'
+  })
+  @IsOptional()
+  @IsString()
+  redirect_uri?: string
+}
+

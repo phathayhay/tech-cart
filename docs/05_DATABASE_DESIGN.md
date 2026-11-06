@@ -76,8 +76,8 @@
 ### 3.1 Identity & Access (`users`, `roles`, `permissions`, `refresh_tokens`, `user_addresses`)
 - **`users`**:
   - PK: `id UUID`
-  - Unique: `email VARCHAR(255) NOT NULL UNIQUE`, `username VARCHAR(100) UNIQUE`
-  - Columns: `password_hash VARCHAR(255) NOT NULL`, `full_name VARCHAR(150) NOT NULL`, `phone VARCHAR(30)`, `avatar_url TEXT`, `date_of_birth DATE`, `email_verified_at TIMESTAMPTZ`, `account_status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE'` (`ACTIVE`, `UNVERIFIED`, `SUSPENDED`), `failed_login_count INT NOT NULL DEFAULT 0`, `locked_until TIMESTAMPTZ`, `created_at`, `updated_at`, `deleted_at`.
+  - Unique: `email VARCHAR(255) NOT NULL UNIQUE`, `username VARCHAR(100) UNIQUE`, `google_id VARCHAR(128) UNIQUE`
+  - Columns: `password_hash VARCHAR(255) NOT NULL`, `auth_provider VARCHAR(30) NOT NULL DEFAULT 'LOCAL'` (`LOCAL`, `GOOGLE`), `full_name VARCHAR(150) NOT NULL`, `phone VARCHAR(30)`, `avatar_url TEXT`, `date_of_birth DATE`, `email_verified_at TIMESTAMPTZ`, `account_status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE'` (`ACTIVE`, `UNVERIFIED`, `SUSPENDED`), `failed_login_count INT NOT NULL DEFAULT 0`, `locked_until TIMESTAMPTZ`, `created_at`, `updated_at`, `deleted_at`.
   - Indexes: `idx_users_email`, `idx_users_status`.
 - **`refresh_tokens`**:
   - PK: `id UUID`

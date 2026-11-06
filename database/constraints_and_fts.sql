@@ -35,3 +35,4 @@ ALTER TABLE reviews ADD CONSTRAINT chk_reviews_rating_range
 -- 6. PostgreSQL Full-Text Search (tsvector + GIN Index) on Products
 CREATE INDEX IF NOT EXISTS idx_products_fts_gin ON products
   USING GIN (to_tsvector('simple', coalesce(name, '') || ' ' || coalesce(brand, '') || ' ' || coalesce(short_description, '')));
+

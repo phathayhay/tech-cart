@@ -163,11 +163,69 @@ export async function runPhase3AuthAndUsersIntegrationTest(): Promise<void> {
     )
     console.log('✅ [4/5] Refresh Token Rotation & Family Reuse Revocation verified.')
 
-    // 5. Cleanup temporary legacy user
-    await prisma.refreshToken.deleteMany({ where: { userId: createdLegacyUser.id } })
-    await prisma.user.delete({ where: { id: createdLegacyUser.id } })
-    console.log('✅ [5/5] Test cleanup complete.')
-    console.log('🎉 PASS: All Phase 3 Auth, RBAC, Token Rotation & Users tests passed!')
+    // 5. Test Google OAuth 2.0 Sign-In (New Google User + Existing Email Account Linking) (TASK-019B)
+    const googleUrlRes = await fetch(`${baseUrl}/auth/google/url`)
+    const googleUrlJson: any = await googleUrlRes.json()
+    assert.strictEqual(googleUrlRes.status, 200)
+    assert.ok(
+      googleUrlJson.data.auth_url.includes('accounts.google.com/o/oauth2/v2/auth'),
+      'Google OAuth URL must point to accounts.google.com'
+    )
+
+    // 5a. Brand-new Google user auto-registration
+    const newGoogleEmail = `google_new_${Date.now()}@gmail.com`
+    const googleNewRes = await fetch(`${baseUrl}/auth/google/dev-simulate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: newGoogleEmail,
+        full_name: 'Google New Customer',
+        avatar_url: 'https://lh3.googleusercontent.com/a/default-user=s96-c'
+      })
+    })
+    const googleNewJson: any = await googleNewRes.json()
+    assert.strictEqual(googleNewRes.status, 200, 'Google new user sign-in must succeed')
+    assert.strictEqual(googleNewJson.data.is_new_user, true)
+    assert.strictEqual(googleNewJson.data.user.auth_provider, 'GOOGLE')
+    assert.ok(googleNewJson.data.user.roles.includes('CUSTOMER'))
+
+    // 5b. Existing local account (customer@techcart.com) automatic Google Account Linking
+    await prisma.user.update({
+      where: { email: 'customer@techcart.com' },
+      data: { googleId: null, authProvider: 'LOCAL' }
+    })
+    const googleLinkRes = await fetch(`${baseUrl}/auth/google/dev-simulate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: 'customer@techcart.com',
+        full_name: 'Phạm Minh Phát (Google)'
+      })
+    })
+    const googleLinkJson: any = await googleLinkRes.json()
+    assert.strictEqual(googleLinkRes.status, 200, 'Google account linking must succeed')
+    assert.strictEqual(googleLinkJson.data.is_new_user, false)
+    assert.strictEqual(googleLinkJson.data.account_linked, true)
+    assert.strictEqual(googleLinkJson.data.user.auth_provider, 'GOOGLE_LINKED')
+    console.log('✅ [5/6] Google OAuth 2.0 Sign-In (New User + Account Linking) verified.')
+
+    // 6. Cleanup temporary test users
+    await prisma.refreshToken.deleteMany({
+      where: { userId: { in: [createdLegacyUser.id, googleNewJson.data.user.id] } }
+    })
+    await prisma.notificationPreference.deleteMany({
+      where: { userId: { in: [createdLegacyUser.id, googleNewJson.data.user.id] } }
+    })
+    await prisma.cart.deleteMany({ where: { userId: googleNewJson.data.user.id } })
+    await prisma.wishlist.deleteMany({ where: { userId: googleNewJson.data.user.id } })
+    await prisma.userRole.deleteMany({ where: { userId: googleNewJson.data.user.id } })
+    await prisma.user.deleteMany({
+      where: { id: { in: [createdLegacyUser.id, googleNewJson.data.user.id] } }
+    })
+    console.log('✅ [6/6] Test cleanup complete.')
+    console.log(
+      '🎉 PASS: All Phase 3 Auth, Google OAuth 2.0, RBAC, Token Rotation & Users tests passed!'
+    )
   } finally {
     await app.close()
   }
@@ -181,3 +239,4 @@ if (require.main === module) {
       process.exit(1)
     })
 }
+

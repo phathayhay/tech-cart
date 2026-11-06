@@ -1,11 +1,23 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseGuards
+} from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Request } from 'express'
+import { Request, Response } from 'express'
 import { CurrentUser, Public } from '../../common/decorators/auth.decorators'
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard'
 import { AuthService } from './auth.service'
 import {
   ForgotPasswordDto,
+  GoogleAuthDto,
   LoginDto,
   LogoutDto,
   RefreshTokenDto,
@@ -13,11 +25,15 @@ import {
   ResetPasswordDto,
   VerifyEmailDto
 } from './dto/auth.dto'
+import { GoogleOAuthService } from './google-oauth.service'
 
 @ApiTags('M01: Authentication & Authorization')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly googleOAuthService: GoogleOAuthService
+  ) {}
 
   @Public()
   @Post('register')
@@ -40,6 +56,97 @@ export class AuthController {
       message: 'Đăng nhập thành công',
       data
     }
+  }
+
+  @Public()
+  @Get('google/url')
+  @ApiOperation({ summary: 'FR-AUTH-008: Get Google OAuth 2.0 Consent Screen URL & config status' })
+  getGoogleUrl(@Query('redirect_uri') redirectUri?: string) {
+    const data = this.authService.getGoogleAuthUrl(redirectUri)
+    return {
+      message: 'Lấy đường dẫn đăng nhập Google thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('google')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'FR-AUTH-008: Authenticate or link account using Google ID Token or Authorization Code'
+  })
+  async googleLogin(@Body() dto: GoogleAuthDto, @Req() req: Request) {
+    const data = await this.authService.loginWithGoogle(dto, req.ip, req.headers['user-agent'])
+    return {
+      message: data.is_new_user
+        ? 'Đăng ký và đăng nhập bằng Google thành công'
+        : 'Đăng nhập bằng Google thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('google/dev-simulate')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'FR-AUTH-008 (Dev/Sandbox): Generate a signed Google OAuth simulation session for local testing'
+  })
+  async googleDevSimulate(
+    @Body()
+    body: {
+      email?: string
+      name?: string
+      full_name?: string
+      sub?: string
+      picture?: string
+      avatar_url?: string
+    },
+    @Req() req: Request
+  ) {
+    const targetEmail = (body.email || 'google.user@techcart.com').trim().toLowerCase()
+    const targetSub =
+      body.sub || `google_sub_${Buffer.from(targetEmail).toString('hex').slice(0, 32)}`
+    const simToken = this.googleOAuthService.createDevSimulationToken({
+      sub: targetSub,
+      email: targetEmail,
+      name: body.full_name || body.name || 'Nguyễn Minh (Google Account)',
+      picture:
+        body.avatar_url ||
+        body.picture ||
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop'
+    })
+    const data = await this.authService.loginWithGoogle(
+      { id_token: simToken },
+      req.ip,
+      req.headers['user-agent']
+    )
+    return {
+      message: 'Đăng nhập bằng tài khoản Google thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Get('google/callback')
+  @ApiOperation({ summary: 'FR-AUTH-008: Google OAuth 2.0 Redirect Callback handler' })
+  async googleCallback(
+    @Query('code') code: string,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    const data = await this.authService.loginWithGoogle(
+      { code },
+      req.ip,
+      req.headers['user-agent']
+    )
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'
+    const params = new URLSearchParams({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      google_login: 'success'
+    })
+    return res.redirect(`${frontendUrl}/?${params.toString()}`)
   }
 
   @Public()
@@ -103,3 +210,4 @@ export class AuthController {
     }
   }
 }
+

@@ -183,3 +183,4 @@ export class UpdateAddressDto {
   @IsBoolean()
   is_default?: boolean
 }
+

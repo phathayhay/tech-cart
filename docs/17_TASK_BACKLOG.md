@@ -59,6 +59,7 @@
 | `TASK-017` | Users (`M02`) | Implement User Profile CRUD, Password Change, and Shipping Address Book (`user_addresses` single-default transaction) | `P0` | `TASK-016` | `src/modules/users/users.controller.ts`, `src/modules/users/users.service.ts` | Supertest address default-toggle test | `COMPLETED` |
 | `TASK-018` | Media | Migrate Sharp + Cloudinary memory-stream upload service into NestJS `MediaModule` with magic-byte validation | `P0` | `TASK-016` | `src/modules/media/media.service.ts`, `src/modules/media/media.controller.ts` | Upload test returning HTTPS Cloudinary URL | `COMPLETED` |
 | `TASK-019` | Frontend Auth | Build React Auth pages (Login, Register, Forgot/Reset Password) + Profile & Address Book UI | `P0` | `TASK-008`, `TASK-017` | `frontend/src/components/auth/AuthModal.tsx`, `frontend/src/components/account/AccountModal.tsx` | Form validation & token refresh interceptor check | `COMPLETED` |
+| `TASK-019B` | Google OAuth (`M01`) | Integrate Google OAuth 2.0 Sign-In & Account Linking (`google_id`, `/api/v1/auth/google/*`, Frontend Google Button) | `P0` | `TASK-014`, `TASK-019` | `prisma/schema.prisma`, `src/modules/auth/google-oauth.service.ts`, `frontend/src/components/auth/AuthModal.tsx`, `public/views/auth.html` | Integration test for Google Sign-In creation & account linking | `COMPLETED` |
 
 ---
 

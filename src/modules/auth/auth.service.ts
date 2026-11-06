@@ -14,6 +14,7 @@ import { AppEnvConfig } from '../../config/env.validation'
 import { PrismaService } from '../../prisma/prisma.service'
 import {
   ForgotPasswordDto,
+  GoogleAuthDto,
   LoginDto,
   LogoutDto,
   RefreshTokenDto,
@@ -21,6 +22,7 @@ import {
   ResetPasswordDto,
   VerifyEmailDto
 } from './dto/auth.dto'
+import { GoogleOAuthService } from './google-oauth.service'
 import { PasswordService } from './password.service'
 
 const MAX_FAILED_LOGIN_ATTEMPTS = 5
@@ -32,6 +34,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly passwordService: PasswordService,
+    private readonly googleOAuthService: GoogleOAuthService,
     private readonly configService: ConfigService<AppEnvConfig, true>
   ) {}
 
@@ -206,6 +209,130 @@ export class AuthService {
         phone: user.phone,
         avatar_url: user.avatarUrl,
         account_status: user.accountStatus,
+        roles,
+        permissions
+      }
+    }
+  }
+
+  getGoogleAuthUrl(redirectUri?: string) {
+    return this.googleOAuthService.getAuthorizationUrl(redirectUri)
+  }
+
+  async loginWithGoogle(dto: GoogleAuthDto, ipAddress?: string, userAgent?: string) {
+    const profile = await this.googleOAuthService.verifyGoogleCredentials(dto)
+
+    // 1. Check if a user with this googleId or email already exists
+    let user = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ googleId: profile.googleId }, { email: profile.email }]
+      }
+    })
+
+    let isNewUser = false
+    let accountLinked = false
+
+    if (user) {
+      if (user.deletedAt || user.accountStatus === AccountStatus.SUSPENDED) {
+        throw new ForbiddenException({
+          code: 'ACCOUNT_SUSPENDED',
+          message: 'Tài khoản này đã bị tạm khóa bởi quản trị viên'
+        })
+      }
+
+      // Link Google ID to existing email account if not yet linked
+      if (!user.googleId) {
+        accountLinked = true
+        user = await this.prisma.user.update({
+          where: { id: user.id },
+          data: {
+            googleId: profile.googleId,
+            authProvider: 'GOOGLE_LINKED',
+            emailVerifiedAt: user.emailVerifiedAt || new Date(),
+            avatarUrl: user.avatarUrl || profile.avatarUrl || null,
+            failedLoginCount: 0,
+            lockedUntil: null
+          }
+        })
+      } else if (!user.avatarUrl && profile.avatarUrl) {
+        user = await this.prisma.user.update({
+          where: { id: user.id },
+          data: { avatarUrl: profile.avatarUrl }
+        })
+      }
+    } else {
+      isNewUser = true
+      const randomPasswordHash = await this.passwordService.hashPassword(
+        `GoogleOAuth_${randomUUID()}_!9aA`
+      )
+      const customerRole = await this.prisma.role.upsert({
+        where: { code: 'CUSTOMER' },
+        update: {},
+        create: {
+          code: 'CUSTOMER',
+          name: 'Khách hàng',
+          description: 'Khách hàng mua sắm đã đăng ký tài khoản'
+        }
+      })
+
+      user = await this.prisma.$transaction(async (tx) => {
+        const created = await tx.user.create({
+          data: {
+            email: profile.email,
+            googleId: profile.googleId,
+            authProvider: 'GOOGLE',
+            passwordHash: randomPasswordHash,
+            fullName: profile.fullName,
+            avatarUrl: profile.avatarUrl || null,
+            emailVerifiedAt: new Date(),
+            accountStatus: AccountStatus.ACTIVE
+          }
+        })
+
+        await tx.userRole.create({
+          data: {
+            userId: created.id,
+            roleId: customerRole.id
+          }
+        })
+
+        await tx.notificationPreference.create({
+          data: {
+            userId: created.id
+          }
+        })
+
+        return created
+      })
+    }
+
+    const { roles, permissions } = await this.getUserRolesAndPermissions(user.id)
+    const tokens = await this.issueTokenPair(
+      user.id,
+      user.email,
+      user.fullName,
+      roles,
+      permissions,
+      randomUUID(),
+      ipAddress,
+      userAgent
+    )
+
+    return {
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      is_new_user: isNewUser,
+      account_linked: accountLinked,
+      auth_provider: user.authProvider,
+      user: {
+        id: user.id,
+        email: user.email,
+        full_name: user.fullName,
+        phone: user.phone,
+        avatar_url: user.avatarUrl,
+        account_status: user.accountStatus,
+        auth_provider: user.authProvider,
+        google_id: user.googleId,
         roles,
         permissions
       }
@@ -539,3 +666,4 @@ export class AuthService {
     return jwt.sign({ sub, purpose, jti: randomUUID() }, secret, { expiresIn: '15m' })
   }
 }
+

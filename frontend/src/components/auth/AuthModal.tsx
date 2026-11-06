@@ -150,7 +150,79 @@ export const AuthModal: React.FC = () => {
             {loading ? 'Đang xử lý...' : tab === 'login' ? 'Đăng nhập ngay' : 'Hoàn tất đăng ký'}
           </button>
         </form>
+
+        <div className="relative my-5">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-3 text-slate-400 font-semibold">Hoặc tiếp tục với</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          disabled={loading}
+          onClick={async () => {
+            setError(null)
+            setLoading(true)
+            try {
+              const urlRes = await apiRequest<{
+                auth_url: string
+                configured: boolean
+              }>('/auth/google/url')
+
+              if (urlRes.data.configured) {
+                window.location.href = urlRes.data.auth_url
+                return
+              }
+
+              // Local/Dev simulation when GOOGLE_CLIENT_ID is not yet set in .env
+              const simRes = await apiRequest<{
+                access_token: string
+                refresh_token: string
+                user: AuthUserProfile
+                is_new_user: boolean
+                account_linked: boolean
+              }>('/auth/google/dev-simulate', {
+                method: 'POST',
+                body: JSON.stringify({
+                  email: email || 'google.user@gmail.com',
+                  full_name: fullName || 'Google TechCart User'
+                })
+              })
+              setSession(simRes.data.access_token, simRes.data.refresh_token, simRes.data.user)
+              await fetchProfile()
+            } catch (err: any) {
+              setError(err.message || 'Đăng nhập Google thất bại')
+            } finally {
+              setLoading(false)
+            }
+          }}
+          className="w-full py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition flex items-center justify-center gap-2.5 disabled:opacity-50"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="#EA4335"
+              d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"
+            />
+            <path
+              fill="#34A853"
+              d="M3.6 7.4l3.2 2.4C7.7 7.6 9.7 6 12 6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M12 21.5c2.5 0 4.7-.8 6.3-2.3l-2.9-2.4c-.8.6-1.9 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2l-3.2 2.5c1.5 3.1 4.9 5.4 8.8 5.4z"
+            />
+            <path
+              fill="#4285F4"
+              d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.4-1.1 2.5-2.1 3.2l2.9 2.4c1.7-1.6 2.8-4 2.8-7.9z"
+            />
+          </svg>
+          <span>Tiếp tục với Google</span>
+        </button>
       </div>
     </div>
   )
 }
+

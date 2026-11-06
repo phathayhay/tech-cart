@@ -80,6 +80,9 @@
 | :--- | :--- | :--- | :--- | :--- |
 | `POST` | `/api/v1/auth/register` | Public | `{ email, password, full_name, phone? }` | `201` `{ access_token, refresh_token, user }` |
 | `POST` | `/api/v1/auth/login` | Public | `{ email, password }` + `X-Guest-Session-Id?` | `200` `{ access_token, refresh_token, user, cart_merged }` |
+| `GET` | `/api/v1/auth/google/url` | Public | `?redirect_uri=` | `200` `{ auth_url, client_id, configured }` |
+| `GET` | `/api/v1/auth/google/callback` | Public | `?code=&state=` | `302 / 200` Exchanges Google OAuth code & redirects with tokens |
+| `POST` | `/api/v1/auth/google` | Public | `{ id_token?, code?, redirect_uri? }` | `200` `{ access_token, refresh_token, is_new_user, account_linked, user }` |
 | `POST` | `/api/v1/auth/refresh` | Public | `{ refresh_token }` | `200` `{ access_token, refresh_token }` (Rotated) |
 | `POST` | `/api/v1/auth/logout` | `Bearer` | `{ refresh_token, all_devices?: boolean }` | `200` `{ revoked: true }` |
 | `POST` | `/api/v1/auth/verify-email` | Public | `{ token }` | `200` `{ verified: true }` |

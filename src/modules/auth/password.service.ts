@@ -57,3 +57,4 @@ export class PasswordService {
     return createHash('sha256').update(rawToken).digest('hex')
   }
 }
+

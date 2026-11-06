@@ -28,3 +28,4 @@ export const CurrentUser = createParamDecorator(
     return field ? user[field] : user
   }
 )
+

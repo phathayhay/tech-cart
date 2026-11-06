@@ -89,3 +89,16 @@ sequenceDiagram
 - **`PermissionsGuard`:** Evaluates `@RequirePermissions('products.write')` against `req.user.permissions`. If missing, throws `403 INSUFFICIENT_PERMISSIONS`.
 - **Resource Ownership Enforcement:** Customer endpoints (`/orders/:orderCode`, `/users/me/addresses/:id`) always scope database queries with `WHERE user_id = req.user.id` to prevent Insecure Direct Object Reference (IDOR).
 
+---
+
+## 4. Google OAuth 2.0 & Account Linking Flow (`FR-AUTH-008`)
+
+1. **Supported Flows:**
+   - **OAuth 2.0 Authorization Code Flow:** Client calls `GET /api/v1/auth/google/url`, redirects user to Google Consent Screen, and exchanges the returned `code` via `POST /api/v1/auth/google` or `GET /api/v1/auth/google/callback`.
+   - **Google Identity Services (ID Token Flow):** Client obtains a signed Google `id_token` from the Google Sign-In button/One-Tap and submits `POST /api/v1/auth/google { id_token }`.
+2. **Account Resolution & Safe Linking Rules:**
+   - Verify the token with Google (`oauth2.googleapis.com/tokeninfo` or `www.googleapis.com/oauth2/v3/userinfo`) and require `email_verified === true`.
+   - **Case 1 (Existing `google_id`):** Match `users.google_id == googleSub` $\rightarrow$ Issue JWT Access + Rotating Refresh Token pair.
+   - **Case 2 (Existing `email`, unlinked):** Match `users.email == googleEmail` $\rightarrow$ Link `google_id = googleSub`, set `email_verified_at = NOW()` if null, preserve existing `avatar_url` (or set Google picture if null), and issue JWT pair (`account_linked: true`).
+   - **Case 3 (New User):** Create `users` row with `google_id = googleSub`, `auth_provider = 'GOOGLE'`, random CSPRNG bcrypt password hash, `email_verified_at = NOW()`, assign `CUSTOMER` role, and issue JWT pair (`is_new_user: true`).
+

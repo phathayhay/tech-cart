@@ -45,6 +45,7 @@ The platform is decomposed into **20 cohesive functional modules**:
   - `FR-AUTH-005`: Verify email via token and support resending verification emails with rate limiting.
   - `FR-AUTH-006`: Forgot password & reset password using single-use expiring token (15m TTL).
   - `FR-AUTH-007`: Enforce RBAC route guards via role and granular permission decorators (`@Permissions('products.write')`).
+  - `FR-AUTH-008`: Authenticate and register/link customer accounts via **Google OAuth 2.0 / Google Identity Services** (`GET /api/v1/auth/google/url`, `GET /api/v1/auth/google/callback`, `POST /api/v1/auth/google`), automatically verifying email and syncing Google avatar if none is set.
 - **Main Workflow:** User submits credentials $\rightarrow$ DTO validation $\rightarrow$ Argon2id/Bcrypt password verification $\rightarrow$ Check `account_status` $\rightarrow$ Generate JWT pair $\rightarrow$ Persist hashed refresh token in `refresh_tokens` $\rightarrow$ Merge guest cart if `X-Guest-Session-Id` present.
 - **Business Rules:** Passwords require $\ge 8$ chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char. Lock account for 15m after 5 consecutive failed logins.
 - **Input / Output:** Input: `RegisterDto`, `LoginDto`, `RefreshTokenDto`. Output: `{ access_token, refresh_token, user }`.

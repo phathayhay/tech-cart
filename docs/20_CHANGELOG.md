@@ -6,9 +6,14 @@
 
 ---
 
-## [1.3.0-phase3] — 2026-11-06 (Phase 3: Authentication, Users, RBAC & Cloudinary Media)
+## [1.3.0-phase3] — 2026-11-06 (Phase 3: Authentication, Users, RBAC, Google OAuth 2.0 & Cloudinary Media)
 
 ### Added
+- Integrated **Google OAuth 2.0 Sign-In & Account Linking** (`TASK-019B`, `FR-AUTH-008`):
+  - Added `google_id` (`VARCHAR(128) UNIQUE`) and `auth_provider` (`LOCAL`, `GOOGLE`, `GOOGLE_LINKED`) to `users` in [prisma/schema.prisma](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/prisma/schema.prisma).
+  - Implemented [GoogleOAuthService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/google-oauth.service.ts) supporting Google OAuth 2.0 authorization URL generation, authorization `code` exchange, `id_token` verification via Google's `tokeninfo` endpoint, and development simulation tokens (`POST /api/v1/auth/google/dev-simulate`).
+  - Added `GET /api/v1/auth/google/url`, `POST /api/v1/auth/google`, `POST /api/v1/auth/google/dev-simulate`, and `GET /api/v1/auth/google/callback` to [AuthController](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.controller.ts) and [AuthService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.service.ts) with automatic account creation (`CUSTOMER` role, cart, wishlist) and existing verified email linking (`GOOGLE_LINKED`).
+  - Added **"Tiếp tục với Google" / "Continue with Google"** buttons to both [AuthModal.tsx](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/frontend/src/components/auth/AuthModal.tsx) and the reference UI ([public/views/auth.html](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/public/views/auth.html), [public/js/auth.js](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/public/js/auth.js), [public/css/auth.css](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/public/css/auth.css)).
 - Implemented [PasswordService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/password.service.ts) (`TASK-013`) supporting `bcrypt` (cost 12) hashing and transparent migration of legacy `SHA-256` hashes to `bcrypt` on login.
 - Implemented [AuthService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.service.ts) and [AuthController](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.controller.ts) (`TASK-014`, `TASK-015`) with:
   - Register, Login (with 5-attempt temporary lockout), Logout (single or all devices), Verify Email, Forgot & Reset Password.
