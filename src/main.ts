@@ -23,17 +23,31 @@ export async function createNestApp(): Promise<NestExpressApplication> {
     rawBody: true
   })
 
-  // Security headers (with CSP configured to allow Cloudinary images and Google Fonts)
+  // Security headers (with CSP configured to allow Cloudinary images, Google Fonts, Lucide icons & Google avatars)
   app.use(
     helmet({
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          imgSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', 'https://images.unsplash.com'],
-          scriptSrc: ["'self'", "'unsafe-inline'"],
-          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          imgSrc: [
+            "'self'",
+            'data:',
+            'blob:',
+            'https://res.cloudinary.com',
+            'https://images.unsplash.com',
+            'https://lh3.googleusercontent.com'
+          ],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://unpkg.com'],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://unpkg.com'],
           fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
-          connectSrc: ["'self'", 'http://localhost:3000', 'http://localhost:5173']
+          connectSrc: [
+            "'self'",
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'http://127.0.0.1:5500',
+            'https://accounts.google.com',
+            'https://oauth2.googleapis.com'
+          ]
         }
       },
       crossOriginResourcePolicy: { policy: 'cross-origin' }

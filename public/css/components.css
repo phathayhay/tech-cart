@@ -33,6 +33,19 @@
   color: var(--color-text);
 }
 
+.brand-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  filter: drop-shadow(0 2px 8px rgba(249, 115, 22, 0.25));
+  transition: transform 0.2s ease;
+}
+
+.logo:hover .brand-logo-img {
+  transform: scale(1.05);
+}
+
 .logo-icon {
   color: var(--color-primary);
 }

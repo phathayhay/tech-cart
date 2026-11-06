@@ -53,9 +53,16 @@ export const AuthModal: React.FC = () => {
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full p-6">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-bold text-slate-900">
-            {tab === 'login' ? 'Đăng nhập TechCart Pro' : 'Tạo tài khoản mới'}
-          </h3>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/images/logo.png"
+              alt="TechCart Logo"
+              className="h-8 w-auto object-contain drop-shadow-xs"
+            />
+            <h3 className="text-lg font-bold text-slate-900">
+              {tab === 'login' ? 'Đăng nhập TechCart Pro' : 'Tạo tài khoản mới'}
+            </h3>
+          </div>
           <button
             onClick={() => setAuthModalOpen(false)}
             className="text-slate-400 hover:text-slate-700 text-sm font-semibold px-2 py-1"

@@ -26,9 +26,11 @@ export function App() {
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="h-9 w-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shadow-sm">
-              TC
-            </span>
+            <img
+              src="/images/logo.png"
+              alt="TechCart Logo"
+              className="h-10 w-auto object-contain rounded-xl drop-shadow-sm"
+            />
             <div>
               <h1 className="font-bold text-lg tracking-tight text-slate-900">TechCart Pro</h1>
               <p className="text-xs text-slate-500">AI-Powered 360° Showcase • {formatVND(2990000)}</p>
