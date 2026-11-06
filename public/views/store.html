@@ -1,0 +1,127 @@
+<!-- STORE SCREEN -->
+<section id="store-screen" class="screen hidden">
+  <div class="store-container">
+    <div id="products-loading" class="products-loading">
+      <i data-lucide="loader-2" class="spin-icon"></i>
+      <span>Loading products...</span>
+    </div>
+    <div id="products-empty" class="products-empty hidden">
+      <i data-lucide="package-x"></i>
+      <p>No products available</p>
+    </div>
+
+    <div id="store-split-layout" class="store-split-layout hidden">
+      <!-- LEFT PANEL: Selected Product Large Image & Details -->
+      <div class="store-showcase-panel" id="store-showcase-panel">
+        <div class="showcase-top-meta">
+          <div class="showcase-badges">
+            <span id="showcase-category" class="showcase-badge-category">Category</span>
+            <span id="showcase-brand" class="showcase-badge-brand">Brand</span>
+          </div>
+          <span id="showcase-counter" class="showcase-counter">01 / 06</span>
+        </div>
+
+        <div class="showcase-image-stage">
+          <span id="showcase-discount-badge" class="showcase-discount-badge hidden">-10%</span>
+          <img
+            id="showcase-image"
+            src=""
+            alt="Selected Product"
+            class="showcase-main-image"
+          />
+          <div class="showcase-Quick-nav">
+            <button type="button" id="showcase-prev-btn" class="btn-wheel-step" title="Previous Item">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <button type="button" id="showcase-next-btn" class="btn-wheel-step" title="Next Item">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="showcase-info-body">
+          <div class="showcase-rating-row">
+            <span class="showcase-rating">
+              <i data-lucide="star" class="star-icon"></i>
+              <strong id="showcase-rating-val">4.9</strong>
+            </span>
+            <span class="showcase-dot">•</span>
+            <span id="showcase-sold" class="showcase-sold">0 sold</span>
+            <span class="showcase-dot">•</span>
+            <span id="showcase-stock" class="showcase-stock">In stock</span>
+          </div>
+
+          <h1 id="showcase-title" class="showcase-title">Select a Product</h1>
+          <p id="showcase-description" class="showcase-description">
+            Rotate the wheel on the right and choose any item to explore its details.
+          </p>
+
+          <div class="showcase-price-block">
+            <div class="showcase-price-main">
+              <span class="showcase-price-label">Price</span>
+              <div class="showcase-price-values">
+                <span id="showcase-price" class="showcase-price-current">0 ₫</span>
+                <span id="showcase-original-price" class="showcase-price-original hidden">0 ₫</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-actions-row">
+            <div class="showcase-qty-control" aria-label="Quantity selector">
+              <button type="button" id="showcase-qty-minus" class="showcase-qty-btn" title="Decrease quantity">
+                <i data-lucide="minus"></i>
+              </button>
+              <span id="showcase-qty-value" class="showcase-qty-value">1</span>
+              <button type="button" id="showcase-qty-plus" class="showcase-qty-btn" title="Increase quantity">
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+
+            <button type="button" id="showcase-add-to-cart-btn" class="btn btn-primary showcase-add-btn">
+              <i data-lucide="shopping-bag"></i>
+              <span>Add to Cart</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: Imaginary Rotating Circle Product Wheel -->
+      <div class="store-wheel-panel">
+        <div class="wheel-header-hint">
+          <span class="wheel-hint-pill">
+            <i data-lucide="refresh-cw"></i>
+            Drag, scroll, or click any item on the circle to rotate
+          </span>
+        </div>
+
+        <div id="wheel-stage" class="wheel-stage" aria-label="Interactive Rotating Product Wheel">
+          <div class="wheel-orbit-outer"></div>
+          <div class="wheel-orbit-dashed"></div>
+          <div class="wheel-orbit-inner"></div>
+
+          <div class="wheel-active-pointer" title="Selected Item Slot">
+            <i data-lucide="arrow-left"></i>
+          </div>
+
+          <div class="wheel-center-hub">
+            <span class="wheel-hub-subtitle">PRODUCT ORBIT</span>
+            <strong id="wheel-hub-active-name" class="wheel-hub-title">TechCart</strong>
+            <div class="wheel-hub-controls">
+              <button type="button" id="wheel-rotate-ccw" class="wheel-hub-btn" title="Rotate Counter-Clockwise">
+                <i data-lucide="rotate-ccw"></i>
+              </button>
+              <button type="button" id="wheel-rotate-cw" class="wheel-hub-btn" title="Rotate Clockwise">
+                <i data-lucide="rotate-cw"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="products-grid" class="products-wheel">
+            <!-- Wheel items positioned along the imaginary circle by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

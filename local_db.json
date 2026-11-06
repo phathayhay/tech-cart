@@ -1,37 +1,151 @@
 {
   "users": [
     {
-      "_id": "6a23d5c19980d969e7bfbd32",
+      "_id": "6aed308913a13673e54a8229",
       "name": "Luong Phat",
       "email": "luongphat100@gmail.com",
-      "date_of_birth": "2005-10-03T00:00:00.000Z",
-      "password": "a2a2288dc960317e5acb20f988fadd9d5ef637344d09881595cb608b0252139a",
-      "created_at": "2026-06-06T08:09:37.630Z",
-      "updated_at": "2026-06-06T08:10:52.461Z",
-      "email_verify_token": "",
+      "date_of_birth": "2005-03-10T00:00:00.000Z",
+      "password": "cb91d0822c034f10e35e397d043f8309322adbc662a0c24d26d927f603ccde70",
+      "created_at": "2026-11-06T01:42:33.301Z",
+      "updated_at": "2026-11-06T01:42:33.301Z",
+      "email_verify_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmFlZDMwODkxM2ExMzY3M2U1NGE4MjI5IiwidG9rZW5fdHlwZSI6MywiaWF0IjoxNzkzOTI5MzUzLCJleHAiOjE3OTQ1MzQxNTN9.ymOB8xWSjIuCSiXoxfGAks2JHVWbRn4cEgqEg_JxeIY",
       "forgot_password_token": "",
-      "verify": 1,
+      "verify": 0,
       "bio": "",
       "location": "",
       "website": "",
-      "username": "user6a23d5c19980d969e7bfbd32",
-      "avatar": "http://localhost:3000/static/image/j4p55ohkz41ec1zm46nopbdz1.jpg",
-      "cover_photo": "http://localhost:3000/static/image/vpfpxbb5s20npgp4sb5369yu8.jpg",
+      "username": "user6aed308913a13673e54a8229",
+      "avatar": "",
+      "cover_photo": "",
       "role": 2
     }
   ],
   "refreshTokens": [
     {
-      "_id": "6a23d5c19980d969e7bfbd33",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmEyM2Q1YzE5OTgwZDk2OWU3YmZiZDMyIiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzgwNzMzMzc3LCJleHAiOjE3ODkzNzMzNzd9.2lOoQyZLbsbWYFIdv6DKHzqntEZWj9ZJC-r3WrdpHBk",
-      "created_at": "2026-06-06T08:09:37.633Z",
-      "user_id": "6a23d5c19980d969e7bfbd32"
+      "_id": "6aed308913a13673e54a822a",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmFlZDMwODkxM2ExMzY3M2U1NGE4MjI5IiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzkzOTI5MzUzLCJleHAiOjE4MDI1NjkzNTN9.3lAGuTvkx-47B7HzMZldn105Dwh2EL_XHc9-aBSvCDs",
+      "created_at": "2026-11-06T01:42:33.303Z",
+      "user_id": "6aed308913a13673e54a8229"
     },
     {
-      "_id": "6a23d7039980d969e7bfbd35",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmEyM2Q1YzE5OTgwZDk2OWU3YmZiZDMyIiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzgwNzMzNjk5LCJleHAiOjE3ODkzNzM2OTl9.AiJIWE0_W8ieE2Cbf8szvJFpioc63cBnu1bpfO6_4Nw",
-      "created_at": "2026-06-06T08:14:59.711Z",
-      "user_id": "6a23d5c19980d969e7bfbd32"
+      "_id": "6aed308e13a13673e54a822b",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmFlZDMwODkxM2ExMzY3M2U1NGE4MjI5IiwidG9rZW5fdHlwZSI6MSwiaWF0IjoxNzkzOTI5MzU4LCJleHAiOjE4MDI1NjkzNTh9.7LSbRmKdYCsbow9AleFzAtiJ0M6iIjc7FIdJwgTk1nI",
+      "created_at": "2026-11-06T01:42:38.406Z",
+      "user_id": "6aed308913a13673e54a8229"
     }
-  ]
+  ],
+  "products": [
+    {
+      "_id": "6a26668b5b409889f78e901f",
+      "name": "MacBook Pro 16\" M3 Pro",
+      "description": "Laptop Apple MacBook Pro 16 inch chip M3 Pro 12-core CPU, 18-core GPU, RAM 36GB, SSD 512GB. Màn hình Liquid Retina XDR 16.2 inch, pin 22 giờ.",
+      "price": 69990000,
+      "original_price": 79990000,
+      "stock": 15,
+      "category": "Laptop",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Apple",
+      "rating": 4.9,
+      "sold_count": 234,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    },
+    {
+      "_id": "6a26668b5b409889f78e9020",
+      "name": "iPhone 15 Pro Max 256GB",
+      "description": "iPhone 15 Pro Max 256GB chip A17 Pro, camera 48MP ProRAW, màn hình Super Retina XDR 6.7 inch ProMotion 120Hz, hỗ trợ USB-C.",
+      "price": 32990000,
+      "original_price": 34990000,
+      "stock": 42,
+      "category": "Phone",
+      "image_url": "https://images.unsplash.com/photo-1696446700704-46954d394066?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Apple",
+      "rating": 4.8,
+      "sold_count": 1205,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    },
+    {
+      "_id": "6a26668b5b409889f78e9021",
+      "name": "Samsung Galaxy S24 Ultra",
+      "description": "Samsung Galaxy S24 Ultra 256GB chip Snapdragon 8 Gen 3, bút S Pen, camera 200MP, màn hình Dynamic AMOLED 6.8 inch 120Hz.",
+      "price": 29990000,
+      "original_price": 33990000,
+      "stock": 28,
+      "category": "Phone",
+      "image_url": "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Samsung",
+      "rating": 4.7,
+      "sold_count": 876,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    },
+    {
+      "_id": "6a26668b5b409889f78e9022",
+      "name": "Sony WH-1000XM5",
+      "description": "Tai nghe chống ồn chủ động Sony WH-1000XM5, driver 30mm, pin 30 giờ, kết nối Bluetooth 5.2, hỗ trợ LDAC Hi-Res Audio.",
+      "price": 7490000,
+      "original_price": 8990000,
+      "stock": 67,
+      "category": "Headphone",
+      "image_url": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Sony",
+      "rating": 4.8,
+      "sold_count": 2341,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    },
+    {
+      "_id": "6a26668b5b409889f78e9023",
+      "name": "Apple Watch Ultra 2",
+      "description": "Apple Watch Ultra 2 chip S9 SiP, màn hình LTPO OLED 49mm, GPS chính xác cao, chống nước 100m, pin 60 giờ chế độ năng lượng thấp.",
+      "price": 19990000,
+      "original_price": 22990000,
+      "stock": 19,
+      "category": "Watch",
+      "image_url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Apple",
+      "rating": 4.9,
+      "sold_count": 432,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    },
+    {
+      "_id": "6a26668b5b409889f78e9024",
+      "name": "iPad Pro 12.9\" M2",
+      "description": "iPad Pro 12.9 inch M2 chip, màn hình Liquid Retina XDR ProMotion 120Hz, camera 12MP Ultra Wide, hỗ trợ Apple Pencil 2 và Magic Keyboard.",
+      "price": 27990000,
+      "original_price": 29990000,
+      "stock": 33,
+      "category": "Tablet",
+      "image_url": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&h=600&fit=crop",
+      "images": [],
+      "brand": "Apple",
+      "rating": 4.8,
+      "sold_count": 567,
+      "is_active": true,
+      "created_at": "2026-06-08T06:51:55.199Z",
+      "updated_at": "2026-06-08T06:51:55.199Z"
+    }
+  ],
+  "carts": [
+    {
+      "_id": "6aed308e13a13673e54a822c",
+      "user_id": "6aed308913a13673e54a8229",
+      "items": [],
+      "created_at": "2026-11-06T01:42:38.415Z",
+      "updated_at": "2026-11-06T01:42:38.415Z"
+    }
+  ],
+  "orders": []
 }

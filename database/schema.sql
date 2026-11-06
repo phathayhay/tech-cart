@@ -1,0 +1,76 @@
+-- PostgreSQL Schema for ShoppingCartBE
+
+CREATE TABLE IF NOT EXISTS users (
+  _id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL DEFAULT '',
+  email VARCHAR(255) UNIQUE NOT NULL,
+  date_of_birth TIMESTAMPTZ,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  email_verify_token TEXT NOT NULL DEFAULT '',
+  forgot_password_token TEXT NOT NULL DEFAULT '',
+  verify INTEGER NOT NULL DEFAULT 0,
+  bio TEXT NOT NULL DEFAULT '',
+  location VARCHAR(255) NOT NULL DEFAULT '',
+  website VARCHAR(255) NOT NULL DEFAULT '',
+  username VARCHAR(255) NOT NULL DEFAULT '',
+  avatar TEXT NOT NULL DEFAULT '',
+  cover_photo TEXT NOT NULL DEFAULT '',
+  role INTEGER NOT NULL DEFAULT 2
+);
+
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+  _id VARCHAR(64) PRIMARY KEY,
+  token TEXT NOT NULL,
+  user_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_user_id ON refresh_tokens(user_id);
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_token ON refresh_tokens(token);
+
+CREATE TABLE IF NOT EXISTS products (
+  _id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  price DOUBLE PRECISION NOT NULL,
+  original_price DOUBLE PRECISION NOT NULL,
+  stock INTEGER NOT NULL DEFAULT 0,
+  category VARCHAR(100) NOT NULL,
+  image_url TEXT NOT NULL,
+  images JSONB NOT NULL DEFAULT '[]'::jsonb,
+  brand VARCHAR(100) NOT NULL DEFAULT '',
+  rating DOUBLE PRECISION NOT NULL DEFAULT 4.5,
+  sold_count INTEGER NOT NULL DEFAULT 0,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS carts (
+  _id VARCHAR(64) PRIMARY KEY,
+  user_id VARCHAR(64) UNIQUE NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+  items JSONB NOT NULL DEFAULT '[]'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  _id VARCHAR(64) PRIMARY KEY,
+  user_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
+  items JSONB NOT NULL DEFAULT '[]'::jsonb,
+  total_amount DOUBLE PRECISION NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  payment_method VARCHAR(50) NOT NULL DEFAULT 'cod',
+  payment_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  paid_at TIMESTAMPTZ,
+  status_history JSONB NOT NULL DEFAULT '[]'::jsonb,
+  shipping_address TEXT NOT NULL DEFAULT '',
+  note TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
+

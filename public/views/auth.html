@@ -1,0 +1,202 @@
+<!-- LOGIN SCREEN -->
+<section id="login-screen" class="screen hidden">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <i data-lucide="shopping-bag"></i>
+      </div>
+      <h1>Welcome Back</h1>
+      <p>Login to manage your shopping dashboard</p>
+    </div>
+    <form id="login-form" class="auth-form">
+      <div class="form-group">
+        <label for="login-email">Email Address</label>
+        <div class="input-wrapper">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="login-email" placeholder="name@example.com" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label-row">
+          <label for="login-password">Password</label>
+          <a href="#/forgot-password" class="text-link">Forgot password?</a>
+        </div>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input
+            type="password"
+            id="login-password"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Login</span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </form>
+    <div class="auth-footer">
+      <p>Don't have an account? <a href="#/register" class="text-link">Register now</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER SCREEN -->
+<section id="register-screen" class="screen hidden">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <i data-lucide="user-plus"></i>
+      </div>
+      <h1>Create Account</h1>
+      <p>Join TechCart today and start shopping</p>
+    </div>
+    <form id="register-form" class="auth-form">
+      <div class="form-group">
+        <label for="register-name">Full Name</label>
+        <div class="input-wrapper">
+          <i data-lucide="user" class="input-icon"></i>
+          <input type="text" id="register-name" placeholder="John Doe" required autocomplete="name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-email">Email Address</label>
+        <div class="input-wrapper">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="register-email" placeholder="name@example.com" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="register-dob">Date of Birth</label>
+          <div class="input-wrapper">
+            <i data-lucide="calendar" class="input-icon"></i>
+            <input type="date" id="register-dob" required />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-password">Password</label>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input
+            type="password"
+            id="register-password"
+            placeholder="Min 6 characters"
+            required
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-confirm-password">Confirm Password</label>
+        <div class="input-wrapper">
+          <i data-lucide="shield-check" class="input-icon"></i>
+          <input
+            type="password"
+            id="register-confirm-password"
+            placeholder="Confirm your password"
+            required
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Register</span>
+        <i data-lucide="user-check"></i>
+      </button>
+    </form>
+    <div class="auth-footer">
+      <p>Already have an account? <a href="#/login" class="text-link">Login instead</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FORGOT PASSWORD SCREEN -->
+<section id="forgot-password-screen" class="screen hidden">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <i data-lucide="key-round"></i>
+      </div>
+      <h1>Reset Password</h1>
+      <p>Enter your email and we'll generate a password recovery token</p>
+    </div>
+    <form id="forgot-password-form" class="auth-form">
+      <div class="form-group">
+        <label for="forgot-email">Email Address</label>
+        <div class="input-wrapper">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="forgot-email" placeholder="name@example.com" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Send Reset Token</span>
+        <i data-lucide="send"></i>
+      </button>
+    </form>
+    <div id="reset-token-box" class="simulation-box hidden">
+      <div class="simulation-title">
+        <i data-lucide="terminal"></i>
+        <span>Local System Intercepted Link</span>
+      </div>
+      <p>Since the email service is local/simulated, we intercepted the link here:</p>
+      <a id="intercepted-reset-link" href="#" class="interception-link">Click here to Reset Password</a>
+    </div>
+    <div class="auth-footer">
+      <p>Remembered password? <a href="#/login" class="text-link">Back to login</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- RESET PASSWORD SCREEN -->
+<section id="reset-password-screen" class="screen hidden">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <i data-lucide="shield-alert"></i>
+      </div>
+      <h1>Create New Password</h1>
+      <p>Please enter your new secure password below</p>
+    </div>
+    <form id="reset-password-form" class="auth-form">
+      <input type="hidden" id="reset-token-input" />
+      <div class="form-group">
+        <label for="reset-password">New Password</label>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input
+            type="password"
+            id="reset-password"
+            placeholder="Min 6 characters"
+            required
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reset-confirm-password">Confirm New Password</label>
+        <div class="input-wrapper">
+          <i data-lucide="shield-check" class="input-icon"></i>
+          <input
+            type="password"
+            id="reset-confirm-password"
+            placeholder="Confirm your new password"
+            required
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Update Password</span>
+        <i data-lucide="save"></i>
+      </button>
+    </form>
+    <div class="auth-footer">
+      <a href="#/login" class="text-link">Back to login</a>
+    </div>
+  </div>
+</section>
+

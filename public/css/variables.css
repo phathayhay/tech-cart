@@ -1,0 +1,155 @@
+/* CSS Variables for design system (Clean White / Light Mode - UI/UX Pro Max) */
+:root {
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  --bg-dark: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: #ffffff;
+  --border-glass: #e2e8f0;
+  --border-focus: rgba(79, 70, 229, 0.5);
+  --shadow-glow: 0 12px 32px -4px rgba(15, 23, 42, 0.07), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #0891b2 100%);
+  --secondary-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --color-primary: #4f46e5;
+  --color-accent: #0891b2;
+  --color-error: #dc2626;
+  --color-success: #059669;
+}
+
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Floating animated background blobs (Subtle light pastel aura on white background) */
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 15% 20%, #f8fafc 0%, #ffffff 70%);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.14;
+  animation: float-blob 20s infinite ease-in-out;
+}
+
+.blob-1 {
+  width: 420px;
+  height: 420px;
+  background: #6366f1;
+  top: -120px;
+  right: -60px;
+}
+
+.blob-2 {
+  width: 520px;
+  height: 520px;
+  background: #06b6d4;
+  bottom: -160px;
+  left: -100px;
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  width: 340px;
+  height: 340px;
+  background: #38bdf8;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+
+@keyframes float-blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 40px) scale(0.9);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+/* App Container Layout */
+.app-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 92px 24px 40px;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container.store-mode {
+  align-items: center;
+  padding-top: 84px;
+}
+
+.app-container.dashboard-mode {
+  align-items: flex-start;
+  padding-top: 100px;
+}
+
+/* Helper Utilities */
+.hidden {
+  display: none !important;
+}
+

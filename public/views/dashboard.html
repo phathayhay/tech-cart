@@ -1,0 +1,228 @@
+<!-- DASHBOARD SCREEN -->
+<section id="dashboard-screen" class="screen hidden">
+  <button id="dashboard-user-info" class="dashboard-user-info-btn" title="Go to Dashboard">
+    <span id="dashboard-user-name" class="dashboard-user-name">Welcome, User</span>
+    <img
+      id="dashboard-user-avatar"
+      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50&h=50&fit=crop"
+      alt="User Avatar"
+      class="dashboard-user-avatar"
+    />
+  </button>
+
+  <div class="dashboard-grid">
+    <!-- Profile Banner Card (Top) -->
+    <div class="dashboard-banner-card">
+      <div class="cover-photo-wrapper">
+        <img
+          id="profile-cover"
+          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=300&fit=crop"
+          alt="Cover Photo"
+          class="cover-photo"
+        />
+        <div class="cover-upload-btn-wrapper">
+          <label for="cover-upload" class="cover-upload-btn"> <i data-lucide="camera"></i> Change Cover </label>
+          <input type="file" id="cover-upload" accept="image/*" class="file-input-hidden" />
+        </div>
+      </div>
+      <div class="profile-header-details">
+        <div class="avatar-wrapper">
+          <img
+            id="profile-avatar"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop"
+            alt="Avatar"
+            class="profile-avatar"
+          />
+          <label for="avatar-upload" class="avatar-upload-btn" title="Change Avatar">
+            <i data-lucide="edit-3"></i>
+          </label>
+          <input type="file" id="avatar-upload" accept="image/*" class="file-input-hidden" />
+        </div>
+        <div class="profile-title-text">
+          <h2 id="profile-display-name">Loading Profile...</h2>
+          <p>@<span id="profile-display-username">username</span></p>
+          <div class="verification-badge-row">
+            <span id="verification-status-badge" class="badge badge-unverified">Unverified</span>
+            <button id="resend-verify-email-btn" class="btn btn-tiny btn-accent hidden">
+              <i data-lucide="mail-warning"></i> Resend Code
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="email-verification-interception-box" class="simulation-box hidden">
+      <div class="simulation-title">
+        <i data-lucide="terminal"></i>
+        <span>Local System Intercepted Email verification</span>
+      </div>
+      <p>We intercepted the email verification link from the console:</p>
+      <a id="intercepted-verify-link" href="#" class="interception-link">Click here to Verify Email Address</a>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-card">
+        <nav class="sidebar-nav">
+          <button class="nav-tab active" data-tab="tab-overview"><i data-lucide="user"></i> Overview</button>
+          <button class="nav-tab" data-tab="tab-orders"><i data-lucide="package"></i> Orders</button>
+          <button class="nav-tab" data-tab="tab-edit-profile"><i data-lucide="edit"></i> Edit Profile</button>
+          <button class="nav-tab" data-tab="tab-security"><i data-lucide="lock"></i> Password & Security</button>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="dashboard-content">
+      <!-- TAB 1: OVERVIEW -->
+      <div id="tab-overview" class="tab-content active">
+        <div class="content-card">
+          <h3>Personal Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Full Name</span>
+              <span id="info-name" class="info-value">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email Address</span>
+              <span id="info-email" class="info-value">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Username</span>
+              <span id="info-username" class="info-value">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Date of Birth</span>
+              <span id="info-dob" class="info-value">-</span>
+            </div>
+            <div class="info-item full-width">
+              <span class="info-label">Bio</span>
+              <span id="info-bio" class="info-value">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Location</span>
+              <span id="info-location" class="info-value">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Website</span>
+              <span id="info-website" class="info-value">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: ORDERS -->
+      <div id="tab-orders" class="tab-content">
+        <div class="content-card">
+          <h3>Order History</h3>
+          <div id="orders-loading" class="orders-loading">
+            <i data-lucide="loader-2" class="spin-icon"></i>
+            <span>Loading orders...</span>
+          </div>
+          <div id="orders-empty" class="orders-empty hidden">
+            <i data-lucide="package-open"></i>
+            <p>No orders yet. Start shopping!</p>
+            <a href="#/" class="btn btn-primary btn-sm">Go to Store</a>
+          </div>
+          <div id="orders-table-wrapper" class="orders-table-wrapper hidden">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: EDIT PROFILE -->
+      <div id="tab-edit-profile" class="tab-content">
+        <div class="content-card">
+          <h3>Edit Profile</h3>
+          <form id="edit-profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edit-name">Full Name</label>
+                <input type="text" id="edit-name" required />
+              </div>
+              <div class="form-group">
+                <label for="edit-username">Username</label>
+                <input type="text" id="edit-username" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edit-dob">Date of Birth</label>
+                <input type="date" id="edit-dob" required />
+              </div>
+              <div class="form-group">
+                <label for="edit-location">Location</label>
+                <input type="text" id="edit-location" placeholder="e.g. Ho Chi Minh, Vietnam" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="edit-website">Website URL</label>
+              <input type="url" id="edit-website" placeholder="https://example.com" />
+            </div>
+            <div class="form-group">
+              <label for="edit-bio">Biography</label>
+              <textarea id="edit-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary"><i data-lucide="check"></i> Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 3: SECURITY -->
+      <div id="tab-security" class="tab-content">
+        <div class="content-card">
+          <h3>Change Password</h3>
+          <form id="change-password-form">
+            <div class="form-group">
+              <label for="change-old-password">Current Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="change-old-password" required autocomplete="current-password" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="change-new-password">New Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="change-new-password"
+                  placeholder="Min 6 characters"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="change-confirm-password">Confirm New Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="change-confirm-password"
+                  placeholder="Confirm new password"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i data-lucide="save"></i> Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
