@@ -11,6 +11,7 @@
     "db:seed": "npx ts-node ./prisma/seed.ts",
     "test:unit": "npx ts-node ./test/unit/money.util.spec.ts",
     "test:db": "npx ts-node ./test/integration/prisma-schema.spec.ts",
+    "test:auth": "npx ts-node ./test/integration/auth-users.spec.ts",
     "typecheck": "npx tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

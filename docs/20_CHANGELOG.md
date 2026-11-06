@@ -6,6 +6,21 @@
 
 ---
 
+## [1.3.0-phase3] — 2026-11-06 (Phase 3: Authentication, Users, RBAC & Cloudinary Media)
+
+### Added
+- Implemented [PasswordService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/password.service.ts) (`TASK-013`) supporting `bcrypt` (cost 12) hashing and transparent migration of legacy `SHA-256` hashes to `bcrypt` on login.
+- Implemented [AuthService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.service.ts) and [AuthController](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/auth/auth.controller.ts) (`TASK-014`, `TASK-015`) with:
+  - Register, Login (with 5-attempt temporary lockout), Logout (single or all devices), Verify Email, Forgot & Reset Password.
+  - Rotating Refresh Tokens (`family_id`) with automatic reuse detection (`401 TOKEN_REUSE_DETECTED`) that revokes the entire compromised token family and writes an entry to `audit_logs`.
+- Implemented RBAC Decorators and Guards (`TASK-016`): [auth.decorators.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/common/decorators/auth.decorators.ts), [jwt-auth.guard.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/common/guards/jwt-auth.guard.ts), and [permissions.guard.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/common/guards/permissions.guard.ts).
+- Implemented [UsersService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/users/users.service.ts) and [UsersController](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/users/users.controller.ts) (`TASK-017`) for profile management, password change, and Shipping Address Book (`user_addresses` with atomic single-default transaction).
+- Implemented [MediaService](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/media/media.service.ts) and [MediaController](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/src/modules/media/media.controller.ts) (`TASK-018`) for Sharp + Cloudinary memory-buffered image uploads (`POST /api/v1/media/upload-image`).
+- Built Frontend Auth & Account modals (`TASK-019`) in [useAuthStore.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/frontend/src/stores/useAuthStore.ts), [AuthModal.tsx](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/frontend/src/components/auth/AuthModal.tsx), and [AccountModal.tsx](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/frontend/src/components/account/AccountModal.tsx).
+- Added integration test suite [test/integration/auth-users.spec.ts](file:///d:/MERN_STACK/html/ch05-nodejs/02-practice/shoppingCartBE/test/integration/auth-users.spec.ts) verifying all 5 Phase 3 security & functional scenarios.
+
+---
+
 ## [1.2.0-phase2] — 2026-11-06 (Phase 2: Database Design & Prisma Setup)
 
 ### Added

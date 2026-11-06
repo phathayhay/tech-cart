@@ -1,0 +1,105 @@
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { Request } from 'express'
+import { CurrentUser, Public } from '../../common/decorators/auth.decorators'
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard'
+import { AuthService } from './auth.service'
+import {
+  ForgotPasswordDto,
+  LoginDto,
+  LogoutDto,
+  RefreshTokenDto,
+  RegisterDto,
+  ResetPasswordDto,
+  VerifyEmailDto
+} from './dto/auth.dto'
+
+@ApiTags('M01: Authentication & Authorization')
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Public()
+  @Post('register')
+  @ApiOperation({ summary: 'FR-AUTH-001: Register new customer account with bcrypt password hashing' })
+  async register(@Body() dto: RegisterDto, @Req() req: Request) {
+    const data = await this.authService.register(dto, req.ip, req.headers['user-agent'])
+    return {
+      message: 'Đăng ký tài khoản thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-002: Authenticate user, auto-upgrade legacy hash & issue JWT pair' })
+  async login(@Body() dto: LoginDto, @Req() req: Request) {
+    const data = await this.authService.login(dto, req.ip, req.headers['user-agent'])
+    return {
+      message: 'Đăng nhập thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-003: Rotate Refresh Token & detect token family reuse compromise' })
+  async refresh(@Body() dto: RefreshTokenDto, @Req() req: Request) {
+    const data = await this.authService.refreshTokens(dto, req.ip, req.headers['user-agent'])
+    return {
+      message: 'Làm mới phiên đăng nhập thành công',
+      data
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-004: Revoke current refresh token or all active sessions' })
+  async logout(@CurrentUser('id') userId: string, @Body() dto: LogoutDto) {
+    const data = await this.authService.logout(userId, dto)
+    return {
+      message: 'Đăng xuất thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('verify-email')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-005: Verify email address token' })
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    const data = await this.authService.verifyEmail(dto)
+    return {
+      message: 'Xác thực email thành công',
+      data
+    }
+  }
+
+  @Public()
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-006: Request password reset token' })
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    const data = await this.authService.forgotPassword(dto)
+    return {
+      message: data.message,
+      data
+    }
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'FR-AUTH-006: Reset password with token and revoke active sessions' })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    const data = await this.authService.resetPassword(dto)
+    return {
+      message: 'Đặt lại mật khẩu thành công',
+      data
+    }
+  }
+}
