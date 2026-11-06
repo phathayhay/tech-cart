@@ -1,226 +1,461 @@
-<!-- LOGIN SCREEN -->
+<!-- LOGIN SCREEN (SPLIT-SCREEN DESIGN) -->
 <section id="login-screen" class="screen hidden">
-  <div class="auth-card">
-    <div class="auth-header">
-      <div class="auth-logo">
-        <img src="/images/logo.png" alt="TechCart Logo" class="auth-logo-img" />
+  <div class="auth-split-container">
+    <!-- LEFT PANEL: Brand & Platform Value Proposition -->
+    <div class="auth-intro-panel">
+      <div class="auth-intro-header">
+        <a href="#/" class="auth-intro-brand">
+          <img src="/images/logo.png" alt="TechCart Logo" class="auth-intro-logo" />
+          <span class="auth-brand-name">Tech<span>Cart</span> Pro</span>
+        </a>
+        <span class="auth-badge-pill">
+          <i data-lucide="sparkles"></i>
+          <span>Thế hệ E-Commerce AI 2026</span>
+        </span>
       </div>
-      <h1>Welcome Back</h1>
-      <p>Login to manage your shopping dashboard</p>
-    </div>
-    <form id="login-form" class="auth-form">
-      <div class="form-group">
-        <label for="login-email">Email Address</label>
-        <div class="input-wrapper">
-          <i data-lucide="mail" class="input-icon"></i>
-          <input type="email" id="login-email" placeholder="name@example.com" required autocomplete="email" />
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="label-row">
-          <label for="login-password">Password</label>
-          <a href="#/forgot-password" class="text-link">Forgot password?</a>
-        </div>
-        <div class="input-wrapper">
-          <i data-lucide="lock" class="input-icon"></i>
-          <input
-            type="password"
-            id="login-password"
-            placeholder="••••••••"
-            required
-            autocomplete="current-password"
-          />
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">
-        <span>Login</span>
-        <i data-lucide="arrow-right"></i>
-      </button>
-    </form>
-    <div class="auth-divider">
-      <span>OR CONTINUE WITH</span>
-    </div>
-    <button type="button" id="google-login-btn" class="btn btn-google btn-block">
-      <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/>
-        <path fill="#34A853" d="M3.6 7.4l3.2 2.4C7.7 7.6 9.7 6 12 6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"/>
-        <path fill="#FBBC05" d="M12 21.5c2.5 0 4.7-.8 6.3-2.3l-2.9-2.4c-.8.6-1.9 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2l-3.2 2.5c1.5 3.1 4.9 5.4 8.8 5.4z"/>
-        <path fill="#4285F4" d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.4-1.1 2.5-2.1 3.2l2.9 2.4c1.7-1.6 2.8-4 2.8-7.9z"/>
-      </svg>
-      <span>Continue with Google</span>
-    </button>
-    <div class="auth-footer">
-      <p>Don't have an account? <a href="#/register" class="text-link">Register now</a></p>
-    </div>
-  </div>
-</section>
 
-<!-- REGISTER SCREEN -->
-<section id="register-screen" class="screen hidden">
-  <div class="auth-card">
-    <div class="auth-header">
-      <div class="auth-logo">
-        <img src="/images/logo.png" alt="TechCart Logo" class="auth-logo-img" />
-      </div>
-      <h1>Create Account</h1>
-      <p>Join TechCart today and start shopping</p>
-    </div>
-    <form id="register-form" class="auth-form">
-      <div class="form-group">
-        <label for="register-name">Full Name</label>
-        <div class="input-wrapper">
-          <i data-lucide="user" class="input-icon"></i>
-          <input type="text" id="register-name" placeholder="John Doe" required autocomplete="name" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="register-email">Email Address</label>
-        <div class="input-wrapper">
-          <i data-lucide="mail" class="input-icon"></i>
-          <input type="email" id="register-email" placeholder="name@example.com" required autocomplete="email" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="register-dob">Date of Birth</label>
-          <div class="input-wrapper">
-            <i data-lucide="calendar" class="input-icon"></i>
-            <input type="date" id="register-dob" required />
+      <div class="auth-intro-body">
+        <h2 class="auth-intro-headline">
+          Mua sắm công nghệ <span class="highlight-text">thông minh & an tâm</span> tuyệt đối
+        </h2>
+        <p class="auth-intro-sub">
+          Nền tảng mua sắm hiện đại được xây dựng để mang lại trải nghiệm tiện ích, bảo mật và vượt trội cho bạn.
+        </p>
+
+        <div class="auth-features-list">
+          <!-- Feature 1 -->
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-ai">
+              <i data-lucide="bot"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Trợ lý AI Mua sắm (Gemini AI)</h4>
+              <p>Tự động so sánh thông số cấu hình, gợi ý sản phẩm phù hợp ngân sách và trả lời câu hỏi 24/7.</p>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-wheel">
+              <i data-lucide="disc-3"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Vòng xoay sản phẩm 360°</h4>
+              <p>Trải nghiệm tương tác đa chiều sống động, ngắm nhìn mọi góc cạnh thiết bị trước khi mua.</p>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-pay">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Thanh toán an toàn VNPay & COD</h4>
+              <p>Đa dạng phương thức thanh toán tức thời, bảo vệ dữ liệu với mã hóa đa tầng chuẩn OWASP.</p>
+            </div>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-voucher">
+              <i data-lucide="ticket-percent"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Kho Voucher & Khuyến mãi tự động</h4>
+              <p>Tự động kích hoạt mã giảm giá tối ưu nhất và ưu đãi miễn phí giao hàng cho bạn.</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="register-password">Password</label>
-        <div class="input-wrapper">
-          <i data-lucide="lock" class="input-icon"></i>
-          <input
-            type="password"
-            id="register-password"
-            placeholder="Min 6 characters"
-            required
-            autocomplete="new-password"
-          />
+
+      <div class="auth-intro-footer">
+        <div class="auth-trust-card">
+          <div class="auth-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <div class="auth-trust-meta">
+            <span class="auth-trust-rating">4.9/5 xếp hạng tin cậy</span>
+            <span class="auth-trust-sub">Được tin dùng bởi 10,000+ tín đồ công nghệ Việt Nam</span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="register-confirm-password">Confirm Password</label>
-        <div class="input-wrapper">
-          <i data-lucide="shield-check" class="input-icon"></i>
-          <input
-            type="password"
-            id="register-confirm-password"
-            placeholder="Confirm your password"
-            required
-            autocomplete="new-password"
-          />
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">
-        <span>Register</span>
-        <i data-lucide="user-check"></i>
-      </button>
-    </form>
-    <div class="auth-divider">
-      <span>OR SIGN UP WITH</span>
     </div>
-    <button type="button" id="google-register-btn" class="btn btn-google btn-block">
-      <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/>
-        <path fill="#34A853" d="M3.6 7.4l3.2 2.4C7.7 7.6 9.7 6 12 6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"/>
-        <path fill="#FBBC05" d="M12 21.5c2.5 0 4.7-.8 6.3-2.3l-2.9-2.4c-.8.6-1.9 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2l-3.2 2.5c1.5 3.1 4.9 5.4 8.8 5.4z"/>
-        <path fill="#4285F4" d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.4-1.1 2.5-2.1 3.2l2.9 2.4c1.7-1.6 2.8-4 2.8-7.9z"/>
-      </svg>
-      <span>Continue with Google</span>
-    </button>
-    <div class="auth-footer">
-      <p>Already have an account? <a href="#/login" class="text-link">Login instead</a></p>
+
+    <!-- RIGHT PANEL: Clean & Minimal Login Card -->
+    <div class="auth-action-panel">
+      <div class="auth-action-header">
+        <h3>Chào mừng trở lại!</h3>
+        <p>Đăng nhập để khám phá giỏ hàng và ưu đãi dành riêng cho bạn</p>
+      </div>
+
+      <!-- 1-Click Google Sign-In Button -->
+      <button type="button" id="google-login-btn" class="btn btn-google btn-block">
+        <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/>
+          <path fill="#34A853" d="M3.6 7.4l3.2 2.4C7.7 7.6 9.7 6 12 6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"/>
+          <path fill="#FBBC05" d="M12 21.5c2.5 0 4.7-.8 6.3-2.3l-2.9-2.4c-.8.6-1.9 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2l-3.2 2.5c1.5 3.1 4.9 5.4 8.8 5.4z"/>
+          <path fill="#4285F4" d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.4-1.1 2.5-2.1 3.2l2.9 2.4c1.7-1.6 2.8-4 2.8-7.9z"/>
+        </svg>
+        <span>Tiếp tục với Google</span>
+      </button>
+
+      <div class="auth-divider">
+        <span>HOẶC BẰNG EMAIL</span>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Địa chỉ Email</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="login-email" placeholder="customer@techcart.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="login-password">Mật khẩu</label>
+            <a href="#/forgot-password" class="text-link">Quên mật khẩu?</a>
+          </div>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="••••••••"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="login-remember" checked />
+            <span>Ghi nhớ đăng nhập trên thiết bị này</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-brand-primary btn-block">
+          <span>Đăng nhập ngay</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Chưa có tài khoản TechCart? <a href="#/register" class="text-link-bold">Tạo tài khoản mới</a></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FORGOT PASSWORD SCREEN -->
+<!-- REGISTER SCREEN (SPLIT-SCREEN DESIGN) -->
+<section id="register-screen" class="screen hidden">
+  <div class="auth-split-container">
+    <!-- LEFT PANEL: Same platform value proposition -->
+    <div class="auth-intro-panel">
+      <div class="auth-intro-header">
+        <a href="#/" class="auth-intro-brand">
+          <img src="/images/logo.png" alt="TechCart Logo" class="auth-intro-logo" />
+          <span class="auth-brand-name">Tech<span>Cart</span> Pro</span>
+        </a>
+        <span class="auth-badge-pill">
+          <i data-lucide="gift"></i>
+          <span>Tặng mã WELCOME10 giảm 10%</span>
+        </span>
+      </div>
+
+      <div class="auth-intro-body">
+        <h2 class="auth-intro-headline">
+          Tham gia cộng đồng <span class="highlight-text">TechCart Pro</span> hôm nay
+        </h2>
+        <p class="auth-intro-sub">
+          Đăng ký tài khoản trong 30 giây để nhận ngay voucher giảm 10% cho đơn hàng đầu tiên và mở khóa toàn bộ tính năng trợ lý AI.
+        </p>
+
+        <div class="auth-features-list">
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-voucher">
+              <i data-lucide="percent"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Voucher chào mừng 10% (WELCOME10)</h4>
+              <p>Tự động cộng voucher vào ví ưu đãi cá nhân ngay sau khi đăng ký thành công.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-ai">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Trợ lý AI Mua sắm riêng biệt</h4>
+              <p>Lưu lại lịch sử tư vấn, gợi ý sản phẩm phù hợp theo sở thích công nghệ của bạn.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon icon-pay">
+              <i data-lucide="truck"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h4>Theo dõi đơn hàng thời gian thực</h4>
+              <p>Cập nhật tiến trình đóng gói, vận chuyển và hỗ trợ đổi trả thuận tiện chỉ với 1 click.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-intro-footer">
+        <div class="auth-trust-card">
+          <div class="auth-stars">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <div class="auth-trust-meta">
+            <span class="auth-trust-rating">Bảo mật thông tin 100%</span>
+            <span class="auth-trust-sub">Mật khẩu được mã hóa chuẩn Bcrypt, không chia sẻ với bên thứ ba</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: Clean Minimal Register Card -->
+    <div class="auth-action-panel">
+      <div class="auth-action-header">
+        <h3>Tạo tài khoản mới</h3>
+        <p>Điền thông tin bên dưới hoặc đăng ký nhanh bằng Google</p>
+      </div>
+
+      <button type="button" id="google-register-btn" class="btn btn-google btn-block">
+        <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/>
+          <path fill="#34A853" d="M3.6 7.4l3.2 2.4C7.7 7.6 9.7 6 12 6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"/>
+          <path fill="#FBBC05" d="M12 21.5c2.5 0 4.7-.8 6.3-2.3l-2.9-2.4c-.8.6-1.9 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2l-3.2 2.5c1.5 3.1 4.9 5.4 8.8 5.4z"/>
+          <path fill="#4285F4" d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.4-1.1 2.5-2.1 3.2l2.9 2.4c1.7-1.6 2.8-4 2.8-7.9z"/>
+        </svg>
+        <span>Đăng ký với Google</span>
+      </button>
+
+      <div class="auth-divider">
+        <span>HOẶC ĐIỀN THÔNG TIN</span>
+      </div>
+
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label for="register-name">Họ và tên</label>
+          <div class="input-wrapper">
+            <i data-lucide="user" class="input-icon"></i>
+            <input type="text" id="register-name" placeholder="Nguyễn Văn A" required autocomplete="name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-email">Địa chỉ Email</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="register-email" placeholder="name@example.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-dob">Ngày sinh</label>
+          <div class="input-wrapper">
+            <i data-lucide="calendar" class="input-icon"></i>
+            <input type="date" id="register-dob" value="2000-01-01" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="register-password">Mật khẩu</label>
+            <div class="input-wrapper">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input
+                type="password"
+                id="register-password"
+                placeholder="Tối thiểu 6 ký tự"
+                required
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm-password">Xác nhận mật khẩu</label>
+            <div class="input-wrapper">
+              <i data-lucide="shield-check" class="input-icon"></i>
+              <input
+                type="password"
+                id="register-confirm-password"
+                placeholder="Nhập lại mật khẩu"
+                required
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-brand-primary btn-block">
+          <span>Hoàn tất đăng ký</span>
+          <i data-lucide="user-plus"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Đã có tài khoản? <a href="#/login" class="text-link-bold">Đăng nhập ngay</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORGOT PASSWORD SCREEN (SPLIT-SCREEN DESIGN) -->
 <section id="forgot-password-screen" class="screen hidden">
-  <div class="auth-card">
-    <div class="auth-header">
-      <div class="auth-logo">
-        <i data-lucide="key-round"></i>
+  <div class="auth-split-container">
+    <div class="auth-intro-panel">
+      <div class="auth-intro-header">
+        <a href="#/" class="auth-intro-brand">
+          <img src="/images/logo.png" alt="TechCart Logo" class="auth-intro-logo" />
+          <span class="auth-brand-name">Tech<span>Cart</span> Pro</span>
+        </a>
       </div>
-      <h1>Reset Password</h1>
-      <p>Enter your email and we'll generate a password recovery token</p>
-    </div>
-    <form id="forgot-password-form" class="auth-form">
-      <div class="form-group">
-        <label for="forgot-email">Email Address</label>
-        <div class="input-wrapper">
-          <i data-lucide="mail" class="input-icon"></i>
-          <input type="email" id="forgot-email" placeholder="name@example.com" required />
+      <div class="auth-intro-body">
+        <h2 class="auth-intro-headline">
+          Khôi phục mật khẩu <span class="highlight-text">nhanh chóng & bảo mật</span>
+        </h2>
+        <p class="auth-intro-sub">
+          Đừng lo lắng! Chúng tôi sẽ gửi hướng dẫn khôi phục mật khẩu an toàn tới hòm thư email của bạn ngay tức thì.
+        </p>
+      </div>
+      <div class="auth-intro-footer">
+        <div class="auth-trust-card">
+          <div class="auth-stars">
+            <i data-lucide="shield-alert"></i>
+          </div>
+          <div class="auth-trust-meta">
+            <span class="auth-trust-rating">Bảo mật liên kết đặt lại</span>
+            <span class="auth-trust-sub">Mã đặt lại mật khẩu có hiệu lực trong 15 phút</span>
+          </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">
-        <span>Send Reset Token</span>
-        <i data-lucide="send"></i>
-      </button>
-    </form>
-    <div id="reset-token-box" class="simulation-box hidden">
-      <div class="simulation-title">
-        <i data-lucide="terminal"></i>
-        <span>Local System Intercepted Link</span>
-      </div>
-      <p>Since the email service is local/simulated, we intercepted the link here:</p>
-      <a id="intercepted-reset-link" href="#" class="interception-link">Click here to Reset Password</a>
     </div>
-    <div class="auth-footer">
-      <p>Remembered password? <a href="#/login" class="text-link">Back to login</a></p>
+
+    <div class="auth-action-panel">
+      <div class="auth-action-header">
+        <h3>Quên mật khẩu?</h3>
+        <p>Nhập email đã đăng ký tài khoản để nhận mã khôi phục</p>
+      </div>
+
+      <form id="forgot-password-form" class="auth-form">
+        <div class="form-group">
+          <label for="forgot-email">Địa chỉ Email</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="forgot-email" placeholder="customer@techcart.com" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-brand-primary btn-block">
+          <span>Gửi liên kết khôi phục</span>
+          <i data-lucide="send"></i>
+        </button>
+      </form>
+
+      <div id="reset-token-box" class="simulation-box hidden">
+        <div class="simulation-title">
+          <i data-lucide="terminal"></i>
+          <span>Hệ thống Test Cục bộ: Liên kết giả lập</span>
+        </div>
+        <p>Hệ thống tự động bắt liên kết đặt lại mật khẩu trong môi trường thử nghiệm:</p>
+        <a id="intercepted-reset-link" href="#" class="interception-link">Nhấp vào đây để đặt lại mật khẩu</a>
+      </div>
+
+      <div class="auth-footer">
+        <p>Nhớ lại mật khẩu? <a href="#/login" class="text-link-bold">Quay lại đăng nhập</a></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- RESET PASSWORD SCREEN -->
+<!-- RESET PASSWORD SCREEN (SPLIT-SCREEN DESIGN) -->
 <section id="reset-password-screen" class="screen hidden">
-  <div class="auth-card">
-    <div class="auth-header">
-      <div class="auth-logo">
-        <i data-lucide="shield-alert"></i>
+  <div class="auth-split-container">
+    <div class="auth-intro-panel">
+      <div class="auth-intro-header">
+        <a href="#/" class="auth-intro-brand">
+          <img src="/images/logo.png" alt="TechCart Logo" class="auth-intro-logo" />
+          <span class="auth-brand-name">Tech<span>Cart</span> Pro</span>
+        </a>
       </div>
-      <h1>Create New Password</h1>
-      <p>Please enter your new secure password below</p>
+      <div class="auth-intro-body">
+        <h2 class="auth-intro-headline">
+          Tạo mật khẩu <span class="highlight-text">mới & an toàn</span>
+        </h2>
+        <p class="auth-intro-sub">
+          Hãy chọn mật khẩu mạnh để bảo vệ tài khoản của bạn trên mọi thiết bị mua sắm.
+        </p>
+      </div>
+      <div class="auth-intro-footer">
+        <div class="auth-trust-card">
+          <div class="auth-stars">
+            <i data-lucide="lock"></i>
+          </div>
+          <div class="auth-trust-meta">
+            <span class="auth-trust-rating">Tiêu chuẩn bảo mật cao</span>
+            <span class="auth-trust-sub">Toàn bộ phiên đăng nhập cũ sẽ được tự động làm mới</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <form id="reset-password-form" class="auth-form">
-      <input type="hidden" id="reset-token-input" />
-      <div class="form-group">
-        <label for="reset-password">New Password</label>
-        <div class="input-wrapper">
-          <i data-lucide="lock" class="input-icon"></i>
-          <input
-            type="password"
-            id="reset-password"
-            placeholder="Min 6 characters"
-            required
-            autocomplete="new-password"
-          />
-        </div>
+
+    <div class="auth-action-panel">
+      <div class="auth-action-header">
+        <h3>Đặt lại mật khẩu mới</h3>
+        <p>Vui lòng nhập mật khẩu mới và xác nhận bên dưới</p>
       </div>
-      <div class="form-group">
-        <label for="reset-confirm-password">Confirm New Password</label>
-        <div class="input-wrapper">
-          <i data-lucide="shield-check" class="input-icon"></i>
-          <input
-            type="password"
-            id="reset-confirm-password"
-            placeholder="Confirm your new password"
-            required
-            autocomplete="new-password"
-          />
+
+      <form id="reset-password-form" class="auth-form">
+        <input type="hidden" id="reset-token-input" />
+        <div class="form-group">
+          <label for="reset-password">Mật khẩu mới</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input
+              type="password"
+              id="reset-password"
+              placeholder="Tối thiểu 6 ký tự"
+              required
+              autocomplete="new-password"
+            />
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="reset-confirm-password">Xác nhận mật khẩu mới</label>
+          <div class="input-wrapper">
+            <i data-lucide="shield-check" class="input-icon"></i>
+            <input
+              type="password"
+              id="reset-confirm-password"
+              placeholder="Nhập lại mật khẩu mới"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-brand-primary btn-block">
+          <span>Lưu mật khẩu mới</span>
+          <i data-lucide="check"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <a href="#/login" class="text-link-bold">Quay lại đăng nhập</a>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">
-        <span>Update Password</span>
-        <i data-lucide="save"></i>
-      </button>
-    </form>
-    <div class="auth-footer">
-      <a href="#/login" class="text-link">Back to login</a>
     </div>
   </div>
 </section>
-
